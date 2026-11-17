@@ -1,162 +1,1291 @@
 {
-  "id": "heihachi",
-  "name": "Heihachi",
-  "packVersion": 1,
-  "gameVersion": "2.09",
-  "stances": {
-    "FUJ": "Wind God's Kamae stance. Hold down after moves like f+3 or f+4 to enter it.",
-    "RAI": "Thunder God's Kamae stance. Hold forward after sidestep 2 (and some other moves) to enter it."
+ "id": "heihachi",
+ "name": "Heihachi",
+ "packVersion": 2,
+ "gameVersion": "mixed, see each combo",
+ "stances": {
+  "FUJ": "Wind God's Kamae stance. Hold down after moves like f+3 or f+4 to enter it.",
+  "RAI": "Thunder God's Kamae stance. Hold forward after sidestep 2 (and some other moves) to enter it.",
+  "WAR": "Warrior Instinct is active (Heihachi's power-up, press 1+4 once you have earned it)."
+ },
+ "moves": [
+  {
+   "n": "f,n,d,df:2",
+   "label": "Electric (EWGF)",
+   "tip": "Launcher. Press 2 at the exact moment you hit down-forward."
   },
-  "moves": [
-    { "n": "f,n,d,df:2", "label": "Electric (EWGF)", "tip": "Launcher. Press 2 at the exact moment you hit down-forward." },
-    { "n": "f,n,d,df+2", "label": "Wind God Fist", "tip": "Same launcher without the exact timing. Easier." },
-    { "n": "f,n,d,df+4", "label": "Hell Sweep", "tip": "Low sweep." },
-    { "n": "f,n,d,df+4,4", "label": "Hell Sweep x2", "tip": "Hell Sweep with the second kick." },
-    { "n": "1,1,2", "label": "Jab string", "tip": "Fast punches. Wall splats." },
-    { "n": "df+1", "label": "Mid poke", "tip": "Quick mid. Used to carry in combos." },
-    { "n": "df+1,2", "label": "Mid poke x2", "tip": "Mid poke with the follow-up." },
-    { "n": "f+3", "label": "Long mid kick", "tip": "Long range mid." },
-    { "n": "f+3,D", "label": "Mid kick into FUJ", "tip": "Hold down after the kick to enter FUJ stance." },
-    { "n": "f+4", "label": "f+4", "tip": "Safe mid. Can go into FUJ stance." },
-    { "n": "b+4", "label": "Counter-hit launcher", "tip": "Launches when it interrupts their attack." },
-    { "n": "b+3", "label": "Homing kick", "tip": "Catches sidesteps." },
-    { "n": "uf+4", "label": "Hop kick", "tip": "Homing, goes over lows." },
-    { "n": "uf+3,4", "label": "Jumping launcher", "tip": "Also used to carry in combos." },
-    { "n": "uf+2,1", "label": "Combo ender", "tip": "Simple ender for beginner routes." },
-    { "n": "b+1,4", "label": "b+1,4", "tip": "Combo filler in beginner routes." },
-    { "n": "df+4,4,1", "label": "df+4,4,1", "tip": "Combo filler in staple routes." },
-    { "n": "FUJ 2", "label": "FUJ launcher", "tip": "Mid launcher from FUJ stance." },
-    { "n": "SS 2,F", "label": "Sidestep 2 into RAI", "tip": "Hold forward after the punch to enter RAI stance." },
-    { "n": "RAI 1", "label": "RAI wall splat", "tip": "Mid from RAI stance. Wall splats." },
-    { "n": "RAI 2", "label": "RAI guard break", "tip": "Guard break from RAI stance." },
-    { "n": "f+1+2", "label": "Headbutt", "tip": "Fast punisher." },
-    { "n": "f,f+1+2", "label": "Heat engager", "tip": "Advancing mid that starts Heat." },
-    { "n": "b+1+2", "label": "Parry", "tip": "Parry that starts Heat." },
-    { "n": "d,df,f+2", "label": "qcf+2", "tip": "Wall break ender. Starts Heat." },
-    { "n": "uf+1", "label": "Power crush", "tip": "Absorbs hits. Wall splats." },
-    { "n": "d+3", "label": "Floor break", "tip": "Ender for breakable floors." },
-    { "n": "df+3,1+2,1", "label": "Wall ender", "tip": "Standard wall combo." },
-    { "n": "1+4", "label": "Warrior Instinct", "tip": "Heihachi's power-up." },
-    { "n": "2+3", "label": "Heat Burst", "tip": "Starts Heat." },
-    { "n": "f,f", "label": "Dash", "tip": "Tap forward twice to close the gap." }
-  ],
-  "combos": [
-    {
-      "id": "hei-beginner-1",
-      "name": "First Combo",
-      "cat": "Beginner",
-      "diff": "Easy",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "starters": ["f,f+2", "f,f+3", "CH b+4"],
-      "route": "uf+4 > f+3 > b+1,4 > uf+3,4 > uf+2,1",
-      "notes": "No electrics and no stances. Land any one of the starters, then do the route."
-    },
-    {
-      "id": "hei-beginner-2",
-      "name": "Hell Sweep Pickup",
-      "cat": "Beginner",
-      "diff": "Easy",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "starters": ["f,n,d,df+4,4,n+4"],
-      "route": "b+1,4 > uf+3,4 > uf+2,1",
-      "notes": "Easy damage after the full Hell Sweep string."
-    },
-    {
-      "id": "hei-beginner-3",
-      "name": "Wind God Fist Route",
-      "cat": "Beginner",
-      "diff": "Medium",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "starters": ["f,n,d,df+2"],
-      "route": "f,n,d,df+2 > f+3 > df+1 > f+3,D > RAI 2 > SS 2,F > RAI 1",
-      "notes": "First step toward the staple. Uses the easier Wind God Fist instead of the Electric. Written exactly as it appears in the source guide."
-    },
-    {
-      "id": "hei-staple-1",
-      "name": "Electric Staple",
-      "cat": "Staple",
-      "diff": "Hard",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "starters": ["f,n,d,df:2", "f,f+2"],
-      "route": "f,n,d,df:2 > f,n,d,df:2 > f+3 > df+1 > f+3,D > FUJ 2 > SS 2,F > RAI 1",
-      "notes": "Main combo after an Electric or f,f+2. Two Electrics in a row is the hard part."
-    },
-    {
-      "id": "hei-staple-2",
-      "name": "Counter-Hit Launcher Route",
-      "cat": "Staple",
-      "diff": "Hard",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "starters": ["CH b+4", "f,f+3", "FC df+2"],
-      "route": "f,n,d,df:2 > f+3,D > df+4,4,1 > f+3,D > FUJ 2 > b:2* > d,df,f+2",
-      "notes": "Ends with qcf+2 for wall break."
-    },
-    {
-      "id": "hei-staple-3",
-      "name": "Hell Sweep Staple",
-      "cat": "Staple",
-      "diff": "Hard",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "starters": ["CH f,n,d,df+4", "f,n,d,df+4,4"],
-      "route": "f,n,d,df:2 > f+3,D > df+4,4,1 > f+3,D > FUJ 2 > SS 2,F > RAI 1",
-      "notes": "Full combo from a counter-hit Hell Sweep or the two-kick Hell Sweep."
-    },
-    {
-      "id": "hei-wall-1",
-      "name": "Wall Ender",
-      "cat": "Wall",
-      "diff": "Easy",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "route": "df+3,1+2,1",
-      "notes": "Use when the opponent is splatted on the wall."
-    },
-    {
-      "id": "hei-wall-2",
-      "name": "Wall Ender (alt)",
-      "cat": "Wall",
-      "diff": "Easy",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "route": "b+3,2 > 1+2",
-      "notes": "Second option at the wall."
-    },
-    {
-      "id": "hei-wall-3",
-      "name": "Wall Combo with Tornado",
-      "cat": "Wall",
-      "diff": "Medium",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "route": "f,f+2 > 1+2 > df+3,1+2,1",
-      "notes": "Use at the wall when you have not used your tornado yet in the combo."
-    },
-    {
-      "id": "hei-small-1",
-      "name": "Headbutt Follow-up",
-      "cat": "Small",
-      "diff": "Easy",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "starters": ["CH WS 2", "f+1+2"],
-      "route": "d,df,f+2",
-      "notes": "Guaranteed follow-up after a counter-hit while-standing 2 or the headbutt."
-    },
-    {
-      "id": "hei-small-2",
-      "name": "While-Standing 1 Pickup",
-      "cat": "Small",
-      "diff": "Hard",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "starters": ["WS 1"],
-      "route": "f,n,d,df:1",
-      "notes": "Needs the exact-timing version of the punch."
-    },
-    {
-      "id": "hei-small-3",
-      "name": "Crouch Kick Pickup",
-      "cat": "Small",
-      "diff": "Easy",
-      "author": "Trunkiez (TekkenDocs guide)",
-      "starters": ["FC df+4"],
-      "route": "f,f+2",
-      "notes": "Low from crouch into f,f+2."
-    }
-  ]
+  {
+   "n": "f,n,d,df+2",
+   "label": "Wind God Fist",
+   "tip": "Same launcher without the exact timing. Easier."
+  },
+  {
+   "n": "f,n,d,df+4",
+   "label": "Hell Sweep",
+   "tip": "Low sweep."
+  },
+  {
+   "n": "f,n,d,df+4,4",
+   "label": "Hell Sweep x2",
+   "tip": "Hell Sweep with the second kick."
+  },
+  {
+   "n": "1,1,2",
+   "label": "Jab string",
+   "tip": "Fast punches. Wall splats."
+  },
+  {
+   "n": "df+1",
+   "label": "Mid poke",
+   "tip": "Quick mid. Used to carry in combos."
+  },
+  {
+   "n": "df+1,2",
+   "label": "Mid poke x2",
+   "tip": "Mid poke with the follow-up."
+  },
+  {
+   "n": "f+3",
+   "label": "Long mid kick",
+   "tip": "Long range mid."
+  },
+  {
+   "n": "f+3,D",
+   "label": "Mid kick into FUJ",
+   "tip": "Hold down after the kick to enter FUJ stance."
+  },
+  {
+   "n": "f+4",
+   "label": "f+4",
+   "tip": "Safe mid. Can go into FUJ stance."
+  },
+  {
+   "n": "b+4",
+   "label": "Counter-hit launcher",
+   "tip": "Launches when it interrupts their attack."
+  },
+  {
+   "n": "b+3",
+   "label": "Homing kick",
+   "tip": "Catches sidesteps."
+  },
+  {
+   "n": "uf+4",
+   "label": "Hop kick",
+   "tip": "Homing, goes over lows."
+  },
+  {
+   "n": "uf+3,4",
+   "label": "Jumping launcher",
+   "tip": "Also used to carry in combos."
+  },
+  {
+   "n": "uf+2,1",
+   "label": "Combo ender",
+   "tip": "Simple ender for beginner routes."
+  },
+  {
+   "n": "b+1,4",
+   "label": "b+1,4",
+   "tip": "Combo filler in beginner routes."
+  },
+  {
+   "n": "df+4,4,1",
+   "label": "df+4,4,1",
+   "tip": "Combo filler in staple routes."
+  },
+  {
+   "n": "FUJ 2",
+   "label": "FUJ launcher",
+   "tip": "Mid launcher from FUJ stance."
+  },
+  {
+   "n": "SS 2,F",
+   "label": "Sidestep 2 into RAI",
+   "tip": "Hold forward after the punch to enter RAI stance."
+  },
+  {
+   "n": "RAI 1",
+   "label": "RAI wall splat",
+   "tip": "Mid from RAI stance. Wall splats."
+  },
+  {
+   "n": "RAI 2",
+   "label": "RAI guard break",
+   "tip": "Guard break from RAI stance."
+  },
+  {
+   "n": "f+1+2",
+   "label": "Headbutt",
+   "tip": "Fast punisher."
+  },
+  {
+   "n": "f,f+1+2",
+   "label": "Heat engager",
+   "tip": "Advancing mid that starts Heat."
+  },
+  {
+   "n": "b+1+2",
+   "label": "Parry",
+   "tip": "Parry that starts Heat."
+  },
+  {
+   "n": "d,df,f+2",
+   "label": "qcf+2",
+   "tip": "Wall break ender. Starts Heat."
+  },
+  {
+   "n": "uf+1",
+   "label": "Power crush",
+   "tip": "Absorbs hits. Wall splats."
+  },
+  {
+   "n": "d+3",
+   "label": "Floor break",
+   "tip": "Ender for breakable floors."
+  },
+  {
+   "n": "df+3,1+2,1",
+   "label": "Wall ender",
+   "tip": "Standard wall combo."
+  },
+  {
+   "n": "1+4",
+   "label": "Warrior Instinct",
+   "tip": "Heihachi's power-up."
+  },
+  {
+   "n": "2+3",
+   "label": "Heat Burst",
+   "tip": "Starts Heat."
+  },
+  {
+   "n": "f,f",
+   "label": "Dash",
+   "tip": "Tap forward twice to close the gap."
+  },
+  {
+   "n": "f,n,df:2",
+   "label": "Perfect Electric",
+   "tip": "Electric with the down skipped. Faster, harder."
+  },
+  {
+   "n": "f,f,n,d,df:2",
+   "label": "Dash Electric",
+   "tip": "Electric with a dash first, for reach."
+  },
+  {
+   "n": "f,n,df:1",
+   "label": "Thunder God Fist pickup",
+   "tip": "Hits opponents on the ground."
+  },
+  {
+   "n": "b:2*",
+   "label": "Charged b+2",
+   "tip": "Hold the punch. Exact timing gives the gold spark version."
+  },
+  {
+   "n": "df+1,:2*",
+   "label": "df+1 into charged 2",
+   "tip": "Hold the second punch. Causes the spin."
+  },
+  {
+   "n": "4",
+   "label": "Right kick",
+   "tip": "Simple filler. Spins the opponent in a combo."
+  },
+  {
+   "n": "1,b+2,4",
+   "label": "Combo ender",
+   "tip": "Easy ender."
+  },
+  {
+   "n": "f,n,d,df+3",
+   "label": "Crouch-dash kick",
+   "tip": "Spins the opponent."
+  },
+  {
+   "n": "f,n,d,DF+4,3",
+   "label": "Hell Sweep into kick",
+   "tip": "Combo ender."
+  },
+  {
+   "n": "FUJ 1",
+   "label": "FUJ punch",
+   "tip": "Filler from FUJ stance."
+  },
+  {
+   "n": "FUJ 1,1",
+   "label": "FUJ double punch",
+   "tip": "Starts Heat."
+  },
+  {
+   "n": "FUJ DF+4,4,1",
+   "label": "FUJ crouch-dash string",
+   "tip": "Hold down-forward in FUJ, then 4,4,1."
+  },
+  {
+   "n": "df+3,1+2,d,df,f+1",
+   "label": "Wall ender (full)",
+   "tip": "Wall ender with the last punch."
+  },
+  {
+   "n": "b+3,2",
+   "label": "b+3,2",
+   "tip": "Wall filler."
+  },
+  {
+   "n": "1+2",
+   "label": "Demon Breath",
+   "tip": "Wall hit."
+  },
+  {
+   "n": "d+3 HEAT 2",
+   "label": "Heat ender",
+   "tip": "Only in Heat."
+  },
+  {
+   "n": "b+3,3 HEAT 2",
+   "label": "Heat wall ender",
+   "tip": "Only in Heat. Best wall damage."
+  },
+  {
+   "n": "HEAT 2+3",
+   "label": "Heat Smash",
+   "tip": "Only in Heat. Uses up the rest of your Heat."
+  },
+  {
+   "n": "df+4,2",
+   "label": "df+4,2",
+   "tip": "Punisher. Wall splats."
+  }
+ ],
+ "combos": [
+  {
+   "id": "hei-beginner-1",
+   "name": "First Combo",
+   "cat": "Beginner",
+   "diff": "Easy",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "starters": [
+    "f,f+2",
+    "f,f+3",
+    "CH b+4"
+   ],
+   "route": "uf+4 > f+3 > b+1,4 > uf+3,4 > uf+2,1",
+   "notes": "No electrics and no stances. Land any one of the starters, then do the route.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "hei-beginner-2",
+   "name": "Hell Sweep Pickup",
+   "cat": "Beginner",
+   "diff": "Easy",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "starters": [
+    "f,n,d,df+4,4,n+4"
+   ],
+   "route": "b+1,4 > uf+3,4 > uf+2,1",
+   "notes": "Easy damage after the full Hell Sweep string.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "hei-beginner-3",
+   "name": "Wind God Fist Route",
+   "cat": "Beginner",
+   "diff": "Medium",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "starters": [
+    "f,n,d,df+2"
+   ],
+   "route": "f,n,d,df+2 > f+3 > df+1 > f+3,D > RAI 2 > SS 2,F > RAI 1",
+   "notes": "First step toward the staple. Uses the easier Wind God Fist instead of the Electric. Written exactly as it appears in the source guide.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "w-bnb-1",
+   "name": "Bread and Butter",
+   "cat": "Beginner",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "4 T! > uf+3,4 > 1,b+2,4",
+   "notes": "Works after most launchers and on every character size.",
+   "starters": [
+    "f,f+3"
+   ],
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-bnb-2",
+   "name": "Bread and Butter after Low Parry",
+   "cat": "Beginner",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "uf+3,4 > f+3 > 1,b+2,4",
+   "notes": "The low parry already spins the opponent.",
+   "starters": [
+    "PARRY"
+   ],
+   "dmg": 40,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "k-2311",
+   "name": "Split Kick Easy Route",
+   "cat": "Beginner",
+   "diff": "Easy",
+   "author": "Miyuki002 (Tekken 8 Combo)",
+   "route": "f+3,D > FUJ 1 > b+1,4 > uf+3,4 > uf+2,1",
+   "notes": "",
+   "starters": [
+    "f,f+3"
+   ],
+   "dmg": 66,
+   "ver": "2.08",
+   "link": "https://tekken8combo.kagewebsite.com/combos-heihachi/"
+  },
+  {
+   "id": "s-1",
+   "name": "Wind God Fist Sample",
+   "cat": "Beginner",
+   "diff": "Medium",
+   "author": "Sportskeeda guide",
+   "route": "f,n,d,df+2 > 4 > uf+3,4 > f+3,D > FUJ 1,2",
+   "notes": "",
+   "link": "https://www.sportskeeda.com/esports/tekken-8-heihachi-guide-best-moves-rage-art-combo-examples"
+  },
+  {
+   "id": "s-3",
+   "name": "Crouching Upper Sample",
+   "cat": "Beginner",
+   "diff": "Easy",
+   "author": "Sportskeeda guide",
+   "route": "f+3 > b+1,4 > uf+3,4 > uf+2,1",
+   "notes": "",
+   "starters": [
+    "FC df+2"
+   ],
+   "link": "https://www.sportskeeda.com/esports/tekken-8-heihachi-guide-best-moves-rage-art-combo-examples"
+  },
+  {
+   "id": "hei-staple-1",
+   "name": "Electric Staple",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "starters": [
+    "f,n,d,df:2",
+    "f,f+2"
+   ],
+   "route": "f,n,d,df:2 > f,n,d,df:2 > f+3 > df+1 > f+3,D > FUJ 2 > SS 2,F > RAI 1",
+   "notes": "Main combo after an Electric or f,f+2. Two Electrics in a row is the hard part.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "hei-staple-2",
+   "name": "Counter-Hit Launcher Route",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "starters": [
+    "CH b+4",
+    "f,f+3",
+    "FC df+2"
+   ],
+   "route": "f,n,d,df:2 > f+3,D > df+4,4,1 > f+3,D > FUJ 2 > b:2* > d,df,f+2",
+   "notes": "Ends with qcf+2 for wall break.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "hei-staple-3",
+   "name": "Hell Sweep Staple",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "starters": [
+    "CH f,n,d,df+4",
+    "f,n,d,df+4,4"
+   ],
+   "route": "f,n,d,df:2 > f+3,D > df+4,4,1 > f+3,D > FUJ 2 > SS 2,F > RAI 1",
+   "notes": "Full combo from a counter-hit Hell Sweep or the two-kick Hell Sweep.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "w-ewgf-1",
+   "name": "Triple Electric Max",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "f,n,df:2 > MD f,n,d,DF+4,4,1 > f+3,D > FUJ 2 T! > DASH b:2* > MD f,n,d,DF+4,3",
+   "notes": "Highest damage listed. Very strict timing.",
+   "starters": [
+    "MD f,n,d,df:2"
+   ],
+   "dmg": 93,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-ewgf-2",
+   "name": "Double Electric Carry",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "MD f,n,d,df:2 > f+3,D > FUJ 1 > f+3,D > FUJ 2 T! > DASH uf+3,4 > d,df,f+2",
+   "notes": "Ends with qcf+2 for wall break.",
+   "starters": [
+    "f,n,d,df:2"
+   ],
+   "dmg": 86,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-ewgf-3",
+   "name": "Double Electric, Charged Ender",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "MD f,n,d,df:2 > f+3,D > FUJ DF > WS 4 > f+3,D > FUJ 2 T! > DASH b:2* > MD f,n,d,DF+4,3",
+   "notes": "",
+   "starters": [
+    "f,n,d,df:2"
+   ],
+   "dmg": 85,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-ewgf-4",
+   "name": "One-Electric Staple",
+   "cat": "Staple",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2 T! > SS 2,F > RAI 1",
+   "notes": "Only needs the one Electric that started the combo.",
+   "starters": [
+    "f,n,d,df:2"
+   ],
+   "dmg": 85,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-ewgf-5",
+   "name": "One-Electric, Sweep Ender",
+   "cat": "Staple",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2 T! > f,n,d,DF+4,3",
+   "notes": "",
+   "starters": [
+    "f,n,d,df:2"
+   ],
+   "dmg": 79,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-uf34-1",
+   "name": "Jumping Launcher Staple",
+   "cat": "Staple",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2 T! > SSR 2,F > RAI 1",
+   "notes": "Sidestep to your right before the 2.",
+   "starters": [
+    "uf+3,4"
+   ],
+   "dmg": 77,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-uf34-2",
+   "name": "Jumping Launcher, Sweep Ender",
+   "cat": "Staple",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2 T! > f,n,d,DF+4,3",
+   "notes": "",
+   "starters": [
+    "uf+3,4"
+   ],
+   "dmg": 71,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-chb4-1",
+   "name": "Counter-Hit b+4 Max",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "f,n,d,df+3 T! > DASH b:2* > f,f,n,d,DF+4,4,1 > f+3,D > FUJ 2",
+   "notes": "",
+   "starters": [
+    "CH b+4"
+   ],
+   "dmg": 91,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-chb4-2",
+   "name": "Counter-Hit b+4, Charged Kick",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "4* T! > DASH b:2* > f,f,n,d,DF+4,4,1 > f+3,D > FUJ 2",
+   "notes": "",
+   "starters": [
+    "CH b+4"
+   ],
+   "dmg": 88,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-chb32",
+   "name": "Counter-Hit b+3,2 Route",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "f,f,n,d,df:2 > f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2 T! > SS 2,F > RAI 1",
+   "notes": "The first kick is blocked or misses and the punch lands as a counter hit.",
+   "starters": [
+    "CH b+3,2"
+   ],
+   "dmg": 86,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-lp-1",
+   "name": "Low Parry Max (Warrior Instinct)",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "b:2* > MD f,n,d,DF+4,4,1 > 1,b+2 WAR 2 > f,n,df:1",
+   "notes": "Needs Warrior Instinct.",
+   "starters": [
+    "PARRY"
+   ],
+   "dmg": 64,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-lp-2",
+   "name": "Low Parry, Charged Punch",
+   "cat": "Staple",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "b:2* > f,n,d,DF+4,4,1 > 1,b+2,4",
+   "notes": "",
+   "starters": [
+    "PARRY"
+   ],
+   "dmg": 51,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-lp-3",
+   "name": "Low Parry into Electric",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "b:2* > MD f,n,d,df:2 > f+3,D > FUJ DF+4,4,3",
+   "notes": "",
+   "starters": [
+    "PARRY"
+   ],
+   "dmg": 50,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-lp-4",
+   "name": "Low Parry (Warrior Instinct, easy)",
+   "cat": "Staple",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "uf+3,4 > f+3 > 1,b+2 WAR 2 > d+4",
+   "notes": "Needs Warrior Instinct.",
+   "starters": [
+    "PARRY"
+   ],
+   "dmg": 49,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-lp-5",
+   "name": "Low Parry, Dash Electric",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "f,f,n,d,df:2 > f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2",
+   "notes": "",
+   "starters": [
+    "PARRY"
+   ],
+   "dmg": 45,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-war-1",
+   "name": "Warrior Instinct Launcher",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "DASH f,n,d,df:2 > f+3,D > FUJ DF > WS 4 > f+3,D > FUJ DF+4,3",
+   "notes": "Needs Warrior Instinct. The launcher spins the opponent.",
+   "starters": [
+    "WAR df+2,1"
+   ],
+   "dmg": 40,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "k-1327",
+   "name": "Double Electric, Hell Sweep Ender",
+   "cat": "Staple",
+   "diff": "Hard",
+   "author": "Walied (Tekken 8 Combo)",
+   "route": "f,n,d,df:2 > f,n,d,df:2 > f,n,d,DF+4,4,1 > f+3,D > FUJ 2 > DASH f,n,d,DF+4,4,3",
+   "notes": "Old game version, may no longer work.",
+   "dmg": 79,
+   "ver": "1.08",
+   "link": "https://tekken8combo.kagewebsite.com/combos-heihachi/"
+  },
+  {
+   "id": "w-hd-1",
+   "name": "Heat Dash Combo",
+   "cat": "Heat",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "f,n,d,df:2 > f+3,D > FUJ DF > WS 4 > f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2 T! > SS 2,F > RAI 1",
+   "notes": "Hold forward when the Heat engager hits to dash in.",
+   "starters": [
+    "f,f+1+2 HEAT F"
+   ],
+   "dmg": 57,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "k-2548",
+   "name": "Double Electric Heat Burst",
+   "cat": "Heat",
+   "diff": "Hard",
+   "author": "Jaylenator (Tekken 8 Combo)",
+   "route": "f,n,d,df:2 > f,n,d,df:2 > f+3 > 3,2,D > FUJ 2 > b+2* > BURST 2+3 > d+3,2",
+   "notes": "",
+   "dmg": 80,
+   "ver": "3.02",
+   "link": "https://tekken8combo.kagewebsite.com/combos-heihachi/"
+  },
+  {
+   "id": "k-2456",
+   "name": "126-Damage Wall Combo",
+   "cat": "Heat",
+   "diff": "Hard",
+   "author": "aksann990 (Tekken 8 Combo)",
+   "route": "f,n,d,df:2 > f,n,d,df:2 > f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2 > b:2* > BURST 2+3 > uf+3,4 W! > b+3,3 > 2",
+   "notes": "Posted as counter hit, at the wall, on Seaside Resort.",
+   "dmg": 126,
+   "ver": "3.01",
+   "link": "https://tekken8combo.kagewebsite.com/combos-heihachi/"
+  },
+  {
+   "id": "k-2007",
+   "name": "Triple Wind God Fist to Wall",
+   "cat": "Heat",
+   "diff": "Hard",
+   "author": "Shinovii (Tekken 8 Combo)",
+   "route": "f,n,d,df+2 > f,n,d,df+2 > f,n,d,df+2 > f+3,D > FUJ 1 > f+3,D > FUJ 2 > DASH b+2* > BURST 2+3 > uf+3,4 W! > DASH n > df+3,1+2,1",
+   "notes": "Posted at the wall on Seaside Resort.",
+   "dmg": 115,
+   "ver": "2.03",
+   "link": "https://tekken8combo.kagewebsite.com/combos-heihachi/"
+  },
+  {
+   "id": "k-1838",
+   "name": "Heat Smash Wall Resplat",
+   "cat": "Heat",
+   "diff": "Hard",
+   "author": "Walied (Tekken 8 Combo)",
+   "route": "b+2* > f,f+2 > 1+2 > df+3,1+2,d,df,f+1",
+   "notes": "Be slightly off to one side and backdash fully so b+2 has room.",
+   "starters": [
+    "HEAT 2+3 W!"
+   ],
+   "dmg": 108,
+   "ver": "2.00",
+   "link": "https://tekken8combo.kagewebsite.com/combos-heihachi/"
+  },
+  {
+   "id": "k-1345",
+   "name": "Gold Spark Showcase",
+   "cat": "Heat",
+   "diff": "Hard",
+   "author": "nijomo (Tekken 8 Combo)",
+   "route": "WAR b+4 > DASH b+2* > f,n,d,df:2 > f+3 > df+1,2* > DASH b+2* > HEAT 2+3 > b+2* > DASH df+1,2* WB! > b+2* > DASH df+1,2*",
+   "notes": "Counter hit. Needs Warrior Instinct and every gold spark. Old game version, may no longer work.",
+   "dmg": 114,
+   "ver": "1.08",
+   "link": "https://tekken8combo.kagewebsite.com/combos-heihachi/"
+  },
+  {
+   "id": "s-2",
+   "name": "Split Kick into Heat",
+   "cat": "Heat",
+   "diff": "Medium",
+   "author": "Sportskeeda guide",
+   "route": "f+3,D > HEAT FUJ 1,1,F > b+1,4 > uf+2,1",
+   "notes": "",
+   "starters": [
+    "f,f+3"
+   ],
+   "link": "https://www.sportskeeda.com/esports/tekken-8-heihachi-guide-best-moves-rage-art-combo-examples"
+  },
+  {
+   "id": "hei-wall-1",
+   "name": "Wall Ender",
+   "cat": "Wall",
+   "diff": "Easy",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "route": "df+3,1+2,1",
+   "notes": "Use when the opponent is splatted on the wall.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "hei-wall-2",
+   "name": "Wall Ender (alt)",
+   "cat": "Wall",
+   "diff": "Easy",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "route": "b+3,2 > 1+2",
+   "notes": "Second option at the wall.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "hei-wall-3",
+   "name": "Wall Combo with Tornado",
+   "cat": "Wall",
+   "diff": "Medium",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "route": "f,f+2 > 1+2 > df+3,1+2,1",
+   "notes": "Use at the wall when you have not used your tornado yet in the combo.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "w-wall-1",
+   "name": "Wall Carry: Heat Burst Ender",
+   "cat": "Wall",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "b+1,4 T! > BURST 2+3 > b+3,3 HEAT 2",
+   "notes": "Tornado still available. Damage shown is what the wall part adds.",
+   "dmg": 35,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-2",
+   "name": "Wall Carry: Charged Punch",
+   "cat": "Wall",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "df+1,:2* T! > df+3,1+2,d,df,f+1",
+   "notes": "Tornado still available. Damage shown is what the wall part adds.",
+   "dmg": 33,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-3",
+   "name": "Wall Carry: Standard",
+   "cat": "Wall",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "b+1,4 T! > df+3,1+2,d,df,f+1",
+   "notes": "Tornado still available. Damage shown is what the wall part adds.",
+   "dmg": 32,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-4",
+   "name": "Wall, Tornado Used: Heat Burst",
+   "cat": "Wall",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "BURST 2+3 > b+3,3 HEAT 2",
+   "notes": "Damage shown is what the wall part adds.",
+   "dmg": 27,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-5",
+   "name": "Wall, Tornado Used: Standard",
+   "cat": "Wall",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "df+3,1+2,d,df,f+1",
+   "notes": "Damage shown is what the wall part adds.",
+   "dmg": 24,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-6",
+   "name": "Wall, Tornado Used: Sweep",
+   "cat": "Wall",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "f,n,d,DF+4,n+4 > 1+2",
+   "notes": "Damage shown is what the wall part adds.",
+   "dmg": 19,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-7",
+   "name": "Wall, Tornado Used: Electric",
+   "cat": "Wall",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "f,n,d,df:2 > 1+2",
+   "notes": "Damage shown is what the wall part adds.",
+   "dmg": 17,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-8",
+   "name": "Wall Splat Max (Heat)",
+   "cat": "Wall",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "b,b > b+1,4 T! > 1+2 > BURST 2+3 > b+3,3 HEAT 2",
+   "notes": "For a clean splat with no combo before it. Backdash first for room. Damage shown is what the wall part adds.",
+   "dmg": 53,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-9",
+   "name": "Wall Splat Max (no Heat)",
+   "cat": "Wall",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "b,b > b+1,4 T! > 1+2 > df+3,1+2,d,df,f+1",
+   "notes": "For a clean splat with no combo before it. Damage shown is what the wall part adds.",
+   "dmg": 50,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-10",
+   "name": "Wall Splat: Crouch-Dash Kick",
+   "cat": "Wall",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "f,n,d,df+3 T! > b+3,2 > 1+2",
+   "notes": "Damage shown is what the wall part adds.",
+   "dmg": 42,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-11",
+   "name": "Wall Splat: Charged Punch, Electric",
+   "cat": "Wall",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "df+1,:2* T! > f,n,d,df:2 > 1+2",
+   "notes": "Damage shown is what the wall part adds.",
+   "dmg": 38,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-wall-12",
+   "name": "Wall Splat: Kick",
+   "cat": "Wall",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "4 T! > df+3,1+2,d,df,f+1",
+   "notes": "Damage shown is what the wall part adds.",
+   "dmg": 38,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "hei-small-1",
+   "name": "Headbutt Follow-up",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "starters": [
+    "CH WS 2",
+    "f+1+2"
+   ],
+   "route": "d,df,f+2",
+   "notes": "Guaranteed follow-up after a counter-hit while-standing 2 or the headbutt.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "hei-small-2",
+   "name": "While-Standing 1 Pickup",
+   "cat": "Small",
+   "diff": "Hard",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "starters": [
+    "WS 1"
+   ],
+   "route": "f,n,d,df:1",
+   "notes": "Needs the exact-timing version of the punch.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "hei-small-3",
+   "name": "Crouch Kick Pickup",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Trunkiez (TekkenDocs guide)",
+   "starters": [
+    "FC df+4"
+   ],
+   "route": "f,f+2",
+   "notes": "Low from crouch into f,f+2.",
+   "ver": "2.09",
+   "link": "https://tekkendocs.com/heihachi/guide"
+  },
+  {
+   "id": "w-sm-1",
+   "name": "Counter-Hit f+4: Heat Ender",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "d+3 HEAT 2",
+   "notes": "Short guaranteed follow-up. In Heat.",
+   "starters": [
+    "CH f+4"
+   ],
+   "dmg": 56,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-2",
+   "name": "Counter-Hit f+4: Ground Punch",
+   "cat": "Small",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "f,n,df:1",
+   "notes": "Short guaranteed follow-up.",
+   "starters": [
+    "CH f+4"
+   ],
+   "dmg": 54,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-3",
+   "name": "Counter-Hit f+4: Stomp",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "d+3",
+   "notes": "Short guaranteed follow-up.",
+   "starters": [
+    "CH f+4"
+   ],
+   "dmg": 44,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-4",
+   "name": "Counter-Hit f+4: Easy",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "f,f+2",
+   "notes": "Short guaranteed follow-up.",
+   "starters": [
+    "CH f+4"
+   ],
+   "dmg": 41,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-5",
+   "name": "Counter-Hit f+4 into FUJ",
+   "cat": "Small",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "FUJ DF+1",
+   "notes": "Short guaranteed follow-up.",
+   "starters": [
+    "CH f+4,D"
+   ],
+   "dmg": 50,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-6",
+   "name": "Knee into FUJ Punches",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "FUJ 1,2",
+   "notes": "The knee must hit.",
+   "starters": [
+    "f+3,D"
+   ],
+   "dmg": 35,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-7",
+   "name": "Knee into Heat",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "FUJ 1,1",
+   "notes": "Starts Heat. Breaks walls.",
+   "starters": [
+    "f+3,D"
+   ],
+   "dmg": 33,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-8",
+   "name": "Hop Kick Pickup (Heat)",
+   "cat": "Small",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "DASH d+3 HEAT 1+2",
+   "notes": "Short guaranteed follow-up. In Heat.",
+   "starters": [
+    "uf+4"
+   ],
+   "dmg": 49,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-9",
+   "name": "Hop Kick Pickup",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "DASH d+4",
+   "notes": "Short guaranteed follow-up.",
+   "starters": [
+    "uf+4"
+   ],
+   "dmg": 41,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-10",
+   "name": "Hop Kick Pickup (easy)",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "f,f+2",
+   "notes": "Short guaranteed follow-up.",
+   "starters": [
+    "uf+4"
+   ],
+   "dmg": 34,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-11",
+   "name": "Warrior Instinct Double Palm",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "WAR f,f+2",
+   "notes": "Needs Warrior Instinct.",
+   "starters": [
+    "WAR 1+2"
+   ],
+   "dmg": 48,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-12",
+   "name": "Guard Break into Jabs",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "1,1,2",
+   "notes": "After the guard break from RAI stance.",
+   "starters": [
+    "RAI 2 GB!"
+   ],
+   "dmg": 28,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-13",
+   "name": "Headbutt: Charged Punch",
+   "cat": "Small",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "df+1,:2*",
+   "notes": "Short guaranteed follow-up.",
+   "starters": [
+    "f+1+2",
+    "CH WS 2"
+   ],
+   "dmg": 41,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-sm-14",
+   "name": "Headbutt: df+4,2",
+   "cat": "Small",
+   "diff": "Easy",
+   "author": "Wavu Wiki",
+   "route": "df+4,2",
+   "notes": "Short guaranteed follow-up. Breaks walls.",
+   "starters": [
+    "f+1+2",
+    "CH WS 2"
+   ],
+   "dmg": 38,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-blast-1",
+   "name": "Wall Blast Follow-up",
+   "cat": "Stage",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "DELAY uf+3,4 W! > b+1,4 T! > 1+2 > BURST 2+3 > b+3,3 HEAT 2",
+   "notes": "For breakable (blast) walls. Adds 41 damage after the wall explodes.",
+   "starters": [
+    "df+4,2 WB!",
+    "1+2 WB!",
+    "HEAT 2+3,F WB!"
+   ],
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-blast-2",
+   "name": "Wall Blast after Heat Engager",
+   "cat": "Stage",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "DELAY uf+3,4 W! > b+1,4 T! > 2 > b+3,3 HEAT 2",
+   "notes": "For breakable (blast) walls. Adds 44 damage.",
+   "starters": [
+    "d,df,f+2 WB!",
+    "f,f+1+2 WB!"
+   ],
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-blast-3",
+   "name": "Wall Blast, no Heat",
+   "cat": "Stage",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "uf+3,4 > b+1,4 T! > df+3,1+2,d,df,f+1",
+   "notes": "For breakable (blast) walls. Adds 36 damage.",
+   "starters": [
+    "df+4,2 WB!",
+    "1+2 WB!"
+   ],
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-floor-1",
+   "name": "Floor Break Follow-up",
+   "cat": "Stage",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "f,n,d,df:2 > f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2 T! > SS 2,F > RAI 1",
+   "notes": "After the floor breaks from a Heat Smash. Also works after a floor-breaking throw.",
+   "starters": [
+    "HEAT 2+3 FB!"
+   ],
+   "dmg": 80,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "k-1425",
+   "name": "Wall-to-Wall Floor Break",
+   "cat": "Stage",
+   "diff": "Hard",
+   "author": "Naoki (Tekken 8 Combo)",
+   "route": "WAR f,f+2 > f,n,d,df:2 > f+3,D > FUJ DF+4,4,1 > f+4 > f,f+2 > DASH b+2* > BURST 2+3 > uf+3,4 > uf+4,1 FB! > df+3,1+2,d,df,f+1",
+   "notes": "Needs Warrior Instinct. The b+2 must be the gold spark version. Old game version, may no longer work. A Rage counter-hit version with f+3 in place of f+4 was posted at 140 damage.",
+   "dmg": 127,
+   "ver": "1.09",
+   "link": "https://tekken8combo.kagewebsite.com/combos-heihachi/"
+  },
+  {
+   "id": "w-float",
+   "name": "Air Hit Pickup",
+   "cat": "Other",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "f+3,D > FUJ DF+4,4,1 > f+3,D > FUJ 2 T! > SS 2,F > RAI 1",
+   "notes": "For when your kick catches the opponent in the air.",
+   "starters": [
+    "WS 4"
+   ],
+   "dmg": 55,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-off-1",
+   "name": "Off-Axis (you stepped right)",
+   "cat": "Other",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "f,n,d,df:2 > f+3 > df+1,:2* T! > MD SSL 2,F > RAI 1",
+   "notes": "Use after about three sidesteps to your right.",
+   "starters": [
+    "f,n,d,df:2"
+   ],
+   "dmg": 73,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-off-2",
+   "name": "Off-Axis (you stepped left)",
+   "cat": "Other",
+   "diff": "Hard",
+   "author": "Wavu Wiki",
+   "route": "f,n,d,df:2 > f+3 > df+1,:2* T! > MD SSR 2,F > RAI 1",
+   "notes": "Use after about three sidesteps to your left.",
+   "starters": [
+    "f,n,d,df:2"
+   ],
+   "dmg": 73,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-bt-1",
+   "name": "Back-Turned Opponent",
+   "cat": "Other",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "b+2* > f+3,D > FUJ DF+4,4,3",
+   "notes": "When the launcher hits them from behind.",
+   "starters": [
+    "f+3,D > FUJ 2"
+   ],
+   "dmg": 67,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  },
+  {
+   "id": "w-bt-2",
+   "name": "Back-Turned Opponent (alt)",
+   "cat": "Other",
+   "diff": "Medium",
+   "author": "Wavu Wiki",
+   "route": "f,n,d,DF+4,4,1 > 1,b+2,1",
+   "notes": "",
+   "starters": [
+    "f+3,D > FUJ 2"
+   ],
+   "dmg": 65,
+   "link": "https://wavu.wiki/t/Heihachi_combos"
+  }
+ ]
 }
