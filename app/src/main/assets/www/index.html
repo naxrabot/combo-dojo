@@ -39,7 +39,10 @@ h1,h2,h3{font-family:var(--head);font-weight:800;margin:0;letter-spacing:.01em}
 .strip{overflow-x:auto;scrollbar-width:none;--sz:28px;padding:8px 6px 3px 3px;margin:-8px -6px -3px -3px}
 .strip::-webkit-scrollbar{display:none}
 .strip .seq{flex-wrap:nowrap}
-.seq{display:flex;flex-wrap:wrap;align-items:center;gap:8px 5px}
+.seq{display:flex;flex-wrap:wrap;align-items:center;gap:10px 5px}
+.mv{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px 4px}
+.strip .mv{flex-wrap:nowrap}
+.flow{--sz:27px}
 .chip{display:inline-flex;flex-direction:column;align-items:center;flex:none;border-radius:11px;position:relative}
 .chip .row{display:flex;gap:2px}
 .chip .tx{font-style:normal;font-size:11px;color:var(--mute);line-height:1.3}
@@ -74,7 +77,11 @@ input.t,select.t,textarea.t{width:100%;background:var(--panel2);border:1.5px sol
 textarea.t{min-height:84px;resize:vertical}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stagebox{min-height:calc(var(--sz) + 34px);--sz:44px}
-.build{min-height:76px;--sz:38px}
+.build{min-height:76px;--sz:34px;max-height:34vh;overflow:auto;margin-bottom:0}
+.stick{position:sticky;top:68px;z-index:4;background:var(--ink);padding:2px 0 4px}
+.stick .btnrow{margin:8px 0 0}
+.stick .btnrow button{height:44px}
+.pads{max-width:560px}
 .pads{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
 .pad{display:grid;gap:6px}
 .pad.d{grid-template-columns:repeat(3,1fr)}
@@ -101,6 +108,14 @@ textarea.t{min-height:84px;resize:vertical}
 .sheet>div{background:var(--panel);border-radius:20px 20px 0 0;padding:18px 16px 22px;width:100%;max-width:640px;max-height:88vh;overflow:auto}
 #toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:var(--washi);color:var(--ink);padding:10px 16px;border-radius:12px;font-weight:600;z-index:30;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
 #toast.show{opacity:1}
+@media (min-width:700px){
+  #app{max-width:1040px}
+  .list{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+  .list .card{margin:0}
+  .dgrid,.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  .big{max-width:420px}
+}
+@media (max-height:520px){.top{position:static}.stick{top:6px}.build{max-height:42vh}}
 @media (prefers-reduced-motion:reduce){#toast{transition:none}}
 </style>
 </head>
@@ -166,7 +181,7 @@ function chipHTML(t,i,sel){const at=i==null?'':` data-ti="${i}"`,sc=sel===i&&i!=
   if(t.k==='n')return `<span class="nx${sc}"${at}>▶</span>`;
   if(t.k==='t')return `<span class="tag${curStances()[t.v]?' st':''}${sc}"${at}>${esc(t.v)}</span>`;
   return `<span class="chip${t.j?' jf':''}${sc}"${at} aria-label="${esc(sayInput(t))}"><span class="row">${t.d?svgDir(t.d,t.h):''}${t.b?svgBtn(t.b):''}</span>${t.j?'<span class="badge">⚡</span>':''}${t.x?'<span class="badge hold">hold</span>':''}${S.set.text?`<i class="tx">${esc(inText(t))}</i>`:''}</span>`;}
-function seqHTML(toks,sel,idx){return `<div class="seq">${toks.map((t,i)=>chipHTML(t,idx?i:null,sel)).join('')}</div>`;}
+function seqHTML(toks,sel,idx){let h='',g='';toks.forEach((t,i)=>{g+=chipHTML(t,idx?i:null,sel);if(t.k==='n'){h+=`<span class="mv">${g}</span>`;g='';}});if(g)h+=`<span class="mv">${g}</span>`;return `<div class="seq">${h}</div>`;}
 function pic(n){return seqHTML(parse(n,curStances()));}
 function movesOf(toks){const m=[[]];toks.forEach(t=>{if(t.k==='n')m.push([]);else m[m.length-1].push(t);});return m.filter(x=>x.length);}
 function sayMove(mv){const st=curStances();const parts=mv.map(t=>t.k==='i'?sayInput(t):st[t.v]?'from '+t.v+' stance':(SAY[t.v]||t.v));
@@ -186,12 +201,13 @@ let V={name:'home',tab:'community',cat:'All'};let B=null;let armed='';
 const app=document.getElementById('app'),sheet=document.getElementById('sheet');
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2200);}
 function go(v){V=Object.assign({cat:V.cat,tab:V.tab},v);armed='';render();window.scrollTo(0,0);}
-function render(){app.innerHTML=V.name==='detail'?vDetail():V.name==='build'?vBuild():V.name==='help'?vHelp():vHome();}
+function render(){app.innerHTML=V.name==='detail'?vDetail():V.name==='build'?vBuild():V.name==='help'?vHelp():vHome();
+  const bx=app.querySelector('.build');if(bx){const s=bx.querySelector('.sel');if(s)s.scrollIntoView({block:'nearest'});else bx.scrollTop=bx.scrollHeight;}}
 
 function cardHTML(c){const fav=S.favs.includes(c.id);
   return `<button class="card" data-act="open" data-id="${esc(c.id)}"><h3>${fav?'★ ':''}${esc(c.name)}</h3>
   <div class="meta"><span>${esc(c.cat)}</span><span class="diff-${esc(c.diff)}">${esc(c.diff)}</span><span>by ${esc(c.author||'you')}</span></div>
-  <div class="strip">${pic(fullNotation(c))}</div></button>`;}
+  <div class="flow">${pic(fullNotation(c))}</div></button>`;}
 function vHome(){let list=V.tab==='community'?community():V.tab==='mine'?mine():community().concat(mine()).filter(c=>S.favs.includes(c.id));
   const cats=['All'].concat(CATS.filter(k=>list.some(c=>c.cat===k)));if(!cats.includes(V.cat))V.cat='All';
   if(V.cat!=='All')list=list.filter(c=>c.cat===V.cat);
@@ -199,7 +215,7 @@ function vHome(){let list=V.tab==='community'?community():V.tab==='mine'?mine():
   return `<div class="top"><h1>Combo Dojo<small>${esc(pack().name||'')} combos for Tekken 8</small></h1><button class="iconbtn" data-act="help">Guide</button></div>
   <div class="tabs">${[['community','Community'],['mine','My combos'],['saved','Saved']].map(t=>`<button class="${V.tab===t[0]?'on':''}" data-act="tab" data-v="${t[0]}">${t[1]}</button>`).join('')}</div>
   <div class="chips">${cats.map(k=>`<button class="chipbtn ${V.cat===k?'on':''}" data-act="cat" data-v="${k}">${k}</button>`).join('')}</div>
-  ${list.length?list.map(cardHTML).join(''):`<p class="empty">${empty}</p>`}
+  ${list.length?`<div class="list">${list.map(cardHTML).join('')}</div>`:`<p class="empty">${empty}</p>`}
   <div class="fab"><button class="big" data-act="new">Make a combo</button></div>`;}
 
 function vDetail(){const c=find(V.id);if(!c){V={name:'home',tab:V.tab,cat:V.cat};return vHome();}
@@ -207,30 +223,30 @@ function vDetail(){const c=find(V.id);if(!c){V={name:'home',tab:V.tab,cat:V.cat}
   const starters=(c.starters||[]).map(s=>pic(s)).join('<div class="or">or</div>');
   return `<div class="top"><button class="iconbtn" data-act="home">Back</button><h1>${esc(c.name)}</h1></div>
   <div class="meta"><span>${esc(c.cat)}</span><span class="diff-${esc(c.diff)}">${esc(c.diff)}</span><span>by ${esc(c.author||'you')}</span></div>
-  <div class="detail">
+  <div class="dgrid"><div><div class="detail">
   ${starters?`<h2 class="sec">Start with</h2><div class="box">${starters}</div><h2 class="sec">Then do</h2>`:''}
   <div class="box">${seqHTML(route)}</div></div>
   ${c.notes?`<p class="hint">${esc(c.notes)}</p>`:''}
   <div class="btnrow"><button data-act="fav" data-id="${esc(c.id)}">${fav?'★ Saved':'☆ Save'}</button><button data-act="share" data-id="${esc(c.id)}">Share</button>
-  ${c.src==='mine'?`<button data-act="edit" data-id="${esc(c.id)}">Edit</button>`:`<button data-act="remix" data-id="${esc(c.id)}">Make my version</button>`}</div>
-  <h2 class="sec">Step by step</h2>
+  ${c.src==='mine'?`<button data-act="edit" data-id="${esc(c.id)}">Edit</button>`:`<button data-act="remix" data-id="${esc(c.id)}">Make my version</button>`}</div></div>
+  <div><h2 class="sec">Step by step</h2>
   <div class="box"><ol class="steps">${movesOf(route).map(m=>`<li><div>${seqHTML(m)}</div><p>${esc(sayMove(m))}</p></li>`).join('')}</ol></div>
-  ${c.src==='mine'?`<div class="btnrow"><button class="warn" data-act="del" data-id="${esc(c.id)}">${armed===c.id?'Tap again to delete':'Delete combo'}</button></div>`:''}`;}
+  ${c.src==='mine'?`<div class="btnrow"><button class="warn" data-act="del" data-id="${esc(c.id)}">${armed===c.id?'Tap again to delete':'Delete combo'}</button></div>`:''}</div></div>`;}
 
 function newB(c){B={id:c&&c.src==='mine'?c.id:null,name:c?(c.src==='mine'?c.name:c.name+' (my version)'):'',cat:c?c.cat:'Staple',diff:c?c.diff:'Easy',notes:c&&c.src==='mine'?c.notes||'':'',
-  toks:c?parse(fullNotation(c),curStances()):[],sel:-1,st:{d:'',h:false,b:[],j:false,x:false}};}
+  toks:c?parse(fullNotation(c),curStances()):[],sel:-1,tab:'pads',st:{d:'',h:false,b:[],j:false,x:false}};}
 function stageTok(){const s=B.st;if(!s.d&&!s.b.length)return null;return {k:'i',d:s.d,h:s.h&&!!s.d&&s.d!=='n',b:s.b.slice().sort().join('+'),j:s.j&&s.b.length>0,x:s.x&&s.b.length>0};}
 function insert(t){if(B.sel>=0&&B.sel<B.toks.length){B.toks.splice(B.sel+1,0,t);B.sel++;}else B.toks.push(t);}
 function vBuild(){const st=B.st,tok=stageTok(),stn=curStances();
   const dirs=['ub','u','uf','b','n','f','db','d','df'];
-  return `<div class="top"><button class="iconbtn" data-act="home">Cancel</button><h1>${B.id?'Edit combo':'Make a combo'}</h1></div>
-  <h2 class="sec">Your combo</h2>
-  <div class="box build">${B.toks.length?seqHTML(B.toks,B.sel,true):'<p class="hint" style="margin:0">Empty so far. Add presses with the pads below, or tap a ready-made move.</p>'}</div>
-  <div class="btnrow"><button data-act="b-next">Next move ▶</button><button data-act="b-rm">${B.sel>=0?'Remove selected':'Undo last'}</button><button class="warn" data-act="b-clear">${armed==='clear'?'Tap again':'Clear'}</button></div>
-  <p class="hint">Tap any picture in your combo to select it. New presses go right after the selected one.</p>
-
-  <h2 class="sec">Add a press</h2>
-  <div class="box">
+  const tabs=[['pads','Build'],['moves',(pack().name||'')+' moves'],['info','Details']];
+  let body='';
+  if(B.tab==='moves')body=`<p class="hint">Tap a move to add it to your combo.</p><div class="box">${(pack().moves||[]).map((m,i)=>`<button class="qm" data-act="b-move" data-v="${i}"><span><b>${esc(m.label)}</b><i>${esc(m.tip||'')}</i></span><div class="strip">${pic(m.n)}</div></button>`).join('')}</div>`;
+  else if(B.tab==='info')body=`<div class="box"><label class="f" for="bn" style="margin-top:0">Name</label><input class="t" id="bn" data-f="name" value="${esc(B.name)}" placeholder="My launcher combo" maxlength="60">
+  <div class="two"><div><label class="f" for="bc">Type</label><select class="t" id="bc" data-f="cat">${CATS.map(k=>`<option ${B.cat===k?'selected':''}>${k}</option>`).join('')}</select></div>
+  <div><label class="f" for="bd">Difficulty</label><select class="t" id="bd" data-f="diff">${DIFFS.map(k=>`<option ${B.diff===k?'selected':''}>${k}</option>`).join('')}</select></div></div>
+  <label class="f" for="bo">Notes</label><textarea class="t" id="bo" data-f="notes" placeholder="Tips, damage, when to use it" maxlength="400">${esc(B.notes)}</textarea></div>`;
+  else body=`<div class="box">
     <div class="pads">
       <div><p class="hint">Direction</p><div class="pad d">${dirs.map(d=>`<button class="${st.d===d?'on':''}" data-act="b-dir" data-v="${d}" aria-label="${d==='n'?'neutral':DIRNAME[d]}">${svgDir(d,false)}</button>`).join('')}</div></div>
       <div><p class="hint">Buttons</p><div class="pad b">${[1,2,3,4].map(n=>`<button class="${st.b.includes(String(n))?'on':''}" data-act="b-btn" data-v="${n}"><span><b>${n}</b>${BTN[n][0].replace(' ','<br>')}</span></button>`).join('')}</div></div>
@@ -239,20 +255,17 @@ function vBuild(){const st=B.st,tok=stageTok(),stn=curStances();
     <div class="stagebox" style="margin-top:12px">${tok?seqHTML([tok])+`<p class="hint" style="margin:6px 0 0">${esc(sayMove([tok]))}</p>`:'<p class="hint" style="margin:0">Pick a direction, buttons, or both. They are pressed together.</p>'}</div>
     <div class="btnrow" style="margin-bottom:0"><button class="go" data-act="b-add">Add this press</button></div>
   </div>
-
-  <h2 class="sec">Add a situation or stance</h2>
+  <h2 class="sec">Situation or stance</h2>
   <div class="box"><div class="tagrow">${Object.keys(stn).concat(Object.keys(TAGS)).map(t=>`<button data-act="b-tag" data-v="${esc(t)}">${esc(t)}</button>`).join('')}</div>
-  <p class="hint" style="margin:10px 0 0">The Guide explains what each one means.</p></div>
-
-  <h2 class="sec">Ready-made ${esc(pack().name||'')} moves</h2>
-  <div class="box">${(pack().moves||[]).map((m,i)=>`<button class="qm" data-act="b-move" data-v="${i}"><span><b>${esc(m.label)}</b><i>${esc(m.tip||'')}</i></span><div class="strip">${pic(m.n)}</div></button>`).join('')}</div>
-
-  <h2 class="sec">Details</h2>
-  <div class="box"><label class="f" for="bn">Name</label><input class="t" id="bn" data-f="name" value="${esc(B.name)}" placeholder="My launcher combo" maxlength="60">
-  <div class="two"><div><label class="f" for="bc">Type</label><select class="t" id="bc" data-f="cat">${CATS.map(k=>`<option ${B.cat===k?'selected':''}>${k}</option>`).join('')}</select></div>
-  <div><label class="f" for="bd">Difficulty</label><select class="t" id="bd" data-f="diff">${DIFFS.map(k=>`<option ${B.diff===k?'selected':''}>${k}</option>`).join('')}</select></div></div>
-  <label class="f" for="bo">Notes</label><textarea class="t" id="bo" data-f="notes" placeholder="Tips, damage, when to use it" maxlength="400">${esc(B.notes)}</textarea></div>
-  <div class="fab"><button class="big" data-act="b-save">Save combo</button></div>`;}
+  <p class="hint" style="margin:10px 0 0">The Guide explains what each one means.</p></div>`;
+  return `<div class="top"><button class="iconbtn" data-act="home">Cancel</button><h1>${B.id?'Edit combo':'Make a combo'}</h1><button class="iconbtn" style="background:var(--straw);color:var(--ink)" data-act="b-save">Save</button></div>
+  <div class="bgrid"><div class="stick">
+  <div class="box build">${B.toks.length?seqHTML(B.toks,B.sel,true):'<p class="hint" style="margin:0">Your combo shows here. Add presses below, or pick a ready-made move.</p>'}</div>
+  <div class="btnrow"><button data-act="b-next">Next move ▶</button><button data-act="b-rm">${B.sel>=0?'Remove selected':'Undo last'}</button><button class="warn" data-act="b-clear">${armed==='clear'?'Tap again':'Clear'}</button></div>
+  </div><div>
+  <div class="tabs" style="margin-top:8px">${tabs.map(t=>`<button class="${B.tab===t[0]?'on':''}" data-act="b-tab" data-v="${t[0]}">${esc(t[1])}</button>`).join('')}</div>
+  ${body}
+  <p class="hint">Tap a picture in your combo to select it. New presses go right after it.</p></div></div>`;}
 
 function vHelp(){const st=curStances(),set=S.set;
   const L=(n,t)=>`<div>${pic(n)}</div><div>${t}</div>`;
@@ -321,6 +334,7 @@ document.addEventListener('click',e=>{
         if(p&&Array.isArray(p.combos)&&p.packVersion>(pack().packVersion||0)){S.packs[CH]=p;save();render();toast('Community combos updated');}else toast('You already have the latest combos');
       }).catch(()=>toast('Could not reach the community list. Check your connection.'));break;
     /* builder */
+    case 'b-tab':B.tab=v;render();break;
     case 'b-dir':B.st.d=B.st.d===v?'':v;render();break;
     case 'b-btn':{const i=B.st.b.indexOf(v);if(i<0)B.st.b.push(v);else B.st.b.splice(i,1);render();break;}
     case 'b-tog':B.st[v]=!B.st[v];render();break;
