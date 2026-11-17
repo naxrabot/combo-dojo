@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combo Dojo</title>
+<style>
+:root{
+  --ink:#121724; --panel:#1b2233; --panel2:#242d42; --line:#34405c;
+  --washi:#efe8d6; --mute:#9aa3b8; --straw:#e0b84c; --spark:#7fd8ff; --hanko:#d9503f;
+  --tile:#2c3650; --off:#5b6788;
+  --head:"Roboto Condensed","sans-serif-condensed","Arial Narrow",system-ui,sans-serif;
+  --body:system-ui,Roboto,"Segoe UI",sans-serif;
+  --sz:34px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--ink);color:var(--washi);font-family:var(--body);font-size:16px;line-height:1.45}
+body{min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--spark);outline-offset:2px}
+#app{max-width:640px;margin:0 auto;padding:0 14px 96px}
+h1,h2,h3{font-family:var(--head);font-weight:800;margin:0;letter-spacing:.01em}
+.top{display:flex;align-items:center;gap:10px;padding:14px 0 10px;position:sticky;top:0;background:var(--ink);z-index:5}
+.top h1{font-size:26px;flex:1;line-height:1.1}
+.top h1 small{display:block;font-family:var(--body);font-weight:400;font-size:13px;color:var(--mute);letter-spacing:0}
+.iconbtn{min-width:44px;height:44px;border-radius:12px;background:var(--panel);padding:0 12px;font-weight:600}
+.tabs{display:flex;background:var(--panel);border-radius:14px;padding:4px;margin:4px 0 12px}
+.tabs button{flex:1;height:42px;border-radius:10px;font-weight:600;color:var(--mute)}
+.tabs button.on{background:var(--straw);color:var(--ink)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chipbtn{flex:none;height:36px;padding:0 14px;border-radius:18px;border:1.5px solid var(--line);color:var(--mute);font-weight:600;font-size:14px}
+.chipbtn.on{border-color:var(--washi);color:var(--washi)}
+.card{display:block;width:100%;text-align:left;background:var(--panel);border-radius:16px;padding:14px;margin-bottom:10px}
+.card h3{font-size:20px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:13px;color:var(--mute);margin:2px 0 10px}
+.diff-Easy{color:#8fd694}.diff-Medium{color:var(--straw)}.diff-Hard{color:#ff9d8a}
+.strip{overflow-x:auto;scrollbar-width:none;--sz:28px;padding:8px 6px 3px 3px;margin:-8px -6px -3px -3px}
+.strip::-webkit-scrollbar{display:none}
+.strip .seq{flex-wrap:nowrap}
+.seq{display:flex;flex-wrap:wrap;align-items:center;gap:8px 5px}
+.chip{display:inline-flex;flex-direction:column;align-items:center;flex:none;border-radius:11px;position:relative}
+.chip .row{display:flex;gap:2px}
+.chip .tx{font-style:normal;font-size:11px;color:var(--mute);line-height:1.3}
+.chip.jf .row{box-shadow:0 0 0 2px var(--spark);border-radius:10px}
+.chip .badge{position:absolute;top:-7px;right:-5px;background:var(--spark);color:var(--ink);font-size:10px;font-weight:800;border-radius:8px;padding:0 4px;line-height:14px}
+.chip .badge.hold{background:var(--washi);right:auto;left:-5px}
+svg.ic{width:var(--sz);height:var(--sz);display:block}
+.tag{flex:none;font-family:var(--head);font-weight:800;font-size:calc(var(--sz)*.42);height:calc(var(--sz)*.72);padding:0 8px;border-radius:8px;background:var(--washi);color:var(--ink);display:inline-flex;align-items:center}
+.tag.st{background:var(--spark)}
+.nx{flex:none;color:var(--straw);font-size:calc(var(--sz)*.5);padding:0 1px}
+.sel{outline:2px solid var(--hanko);outline-offset:3px;border-radius:10px}
+.empty{color:var(--mute);text-align:center;padding:36px 16px}
+.fab{position:fixed;left:0;right:0;bottom:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--ink) 35%);display:flex;justify-content:center;z-index:6}
+.big{height:54px;border-radius:16px;background:var(--straw);color:var(--ink);font-family:var(--head);font-weight:800;font-size:19px;padding:0 22px;width:100%;max-width:612px}
+.big.alt{background:var(--panel2);color:var(--washi)}
+.btnrow{display:flex;gap:8px;margin:10px 0}
+.btnrow button{flex:1;height:48px;border-radius:13px;background:var(--panel2);font-weight:600}
+.btnrow button.go{background:var(--straw);color:var(--ink)}
+.btnrow button.warn{color:#ff9d8a}
+.sec{margin:18px 0 8px;font-size:18px}
+.hint{color:var(--mute);font-size:14px;margin:0 0 8px}
+.box{background:var(--panel);border-radius:16px;padding:14px;margin-bottom:10px}
+.detail{--sz:44px}
+.or{color:var(--mute);font-size:13px;margin:8px 0}
+ol.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:4px 8px;padding:12px 0;border-top:1px solid var(--line);--sz:36px}
+ol.steps li:first-child{border-top:0}
+ol.steps li::before{content:counter(s);font-family:var(--head);font-weight:800;font-size:20px;color:var(--straw)}
+ol.steps p{grid-column:2;margin:4px 0 0;font-size:15px;color:var(--washi)}
+label.f{display:block;font-size:14px;color:var(--mute);margin:10px 0 4px}
+input.t,select.t,textarea.t{width:100%;background:var(--panel2);border:1.5px solid var(--line);border-radius:12px;padding:12px;min-height:48px}
+textarea.t{min-height:84px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stagebox{min-height:calc(var(--sz) + 34px);--sz:44px}
+.build{min-height:76px;--sz:38px}
+.pads{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.pad{display:grid;gap:6px}
+.pad.d{grid-template-columns:repeat(3,1fr)}
+.pad.b{grid-template-columns:repeat(2,1fr)}
+.pad button{aspect-ratio:1;border-radius:14px;background:var(--panel2);display:grid;place-items:center;--sz:70%}
+.pad button svg.ic{width:70%;height:70%}
+.pad.b button{font-family:var(--head);font-weight:800;font-size:15px;color:var(--mute);line-height:1.1}
+.pad.b button b{display:block;font-size:26px;color:var(--washi)}
+.pad button.on{background:var(--straw);color:var(--ink)}
+.pad.b button.on b,.pad.b button.on{color:var(--ink)}
+.tog{display:flex;gap:8px;margin-top:10px}
+.tog button{flex:1;min-height:44px;border-radius:12px;border:1.5px solid var(--line);font-size:14px;font-weight:600;color:var(--mute);padding:4px}
+.tog button.on{border-color:var(--spark);color:var(--spark)}
+.qm{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 0;border-top:1px solid var(--line);--sz:30px}
+.qm:first-of-type{border-top:0}
+.qm span{flex:1;min-width:0}
+.qm span b{display:block;font-weight:600}
+.qm span i{font-style:normal;font-size:13px;color:var(--mute)}
+.qm .strip{max-width:48%}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px}
+.tagrow button{height:40px;padding:0 12px;border-radius:10px;background:var(--panel2);font-weight:700;font-family:var(--head)}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:10px 12px;align-items:center;--sz:38px}
+.sheet{position:fixed;inset:0;background:rgba(8,10,18,.72);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sheet>div{background:var(--panel);border-radius:20px 20px 0 0;padding:18px 16px 22px;width:100%;max-width:640px;max-height:88vh;overflow:auto}
+#toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:var(--washi);color:var(--ink);padding:10px 16px;border-radius:12px;font-weight:600;z-index:30;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
+#toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="sheet"></div>
+<div id="toast" role="status"></div>
+<script>
+const PACKS=/*DATA_START*/{"heihachi":{"id":"heihachi","name":"Heihachi","packVersion":1,"gameVersion":"2.09","stances":{"FUJ":"Wind God's Kamae stance. Hold down after moves like f+3 or f+4 to enter it.","RAI":"Thunder God's Kamae stance. Hold forward after sidestep 2 (and some other moves) to enter it."},"moves":[{"n":"f,n,d,df:2","label":"Electric (EWGF)","tip":"Launcher. Press 2 at the exact moment you hit down-forward."},{"n":"f,n,d,df+2","label":"Wind God Fist","tip":"Same launcher without the exact timing. Easier."},{"n":"f,n,d,df+4","label":"Hell Sweep","tip":"Low sweep."},{"n":"f,n,d,df+4,4","label":"Hell Sweep x2","tip":"Hell Sweep with the second kick."},{"n":"1,1,2","label":"Jab string","tip":"Fast punches. Wall splats."},{"n":"df+1","label":"Mid poke","tip":"Quick mid. Used to carry in combos."},{"n":"df+1,2","label":"Mid poke x2","tip":"Mid poke with the follow-up."},{"n":"f+3","label":"Long mid kick","tip":"Long range mid."},{"n":"f+3,D","label":"Mid kick into FUJ","tip":"Hold down after the kick to enter FUJ stance."},{"n":"f+4","label":"f+4","tip":"Safe mid. Can go into FUJ stance."},{"n":"b+4","label":"Counter-hit launcher","tip":"Launches when it interrupts their attack."},{"n":"b+3","label":"Homing kick","tip":"Catches sidesteps."},{"n":"uf+4","label":"Hop kick","tip":"Homing, goes over lows."},{"n":"uf+3,4","label":"Jumping launcher","tip":"Also used to carry in combos."},{"n":"uf+2,1","label":"Combo ender","tip":"Simple ender for beginner routes."},{"n":"b+1,4","label":"b+1,4","tip":"Combo filler in beginner routes."},{"n":"df+4,4,1","label":"df+4,4,1","tip":"Combo filler in staple routes."},{"n":"FUJ 2","label":"FUJ launcher","tip":"Mid launcher from FUJ stance."},{"n":"SS 2,F","label":"Sidestep 2 into RAI","tip":"Hold forward after the punch to enter RAI stance."},{"n":"RAI 1","label":"RAI wall splat","tip":"Mid from RAI stance. Wall splats."},{"n":"RAI 2","label":"RAI guard break","tip":"Guard break from RAI stance."},{"n":"f+1+2","label":"Headbutt","tip":"Fast punisher."},{"n":"f,f+1+2","label":"Heat engager","tip":"Advancing mid that starts Heat."},{"n":"b+1+2","label":"Parry","tip":"Parry that starts Heat."},{"n":"d,df,f+2","label":"qcf+2","tip":"Wall break ender. Starts Heat."},{"n":"uf+1","label":"Power crush","tip":"Absorbs hits. Wall splats."},{"n":"d+3","label":"Floor break","tip":"Ender for breakable floors."},{"n":"df+3,1+2,1","label":"Wall ender","tip":"Standard wall combo."},{"n":"1+4","label":"Warrior Instinct","tip":"Heihachi's power-up."},{"n":"2+3","label":"Heat Burst","tip":"Starts Heat."},{"n":"f,f","label":"Dash","tip":"Tap forward twice to close the gap."}],"combos":[{"id":"hei-beginner-1","name":"First Combo","cat":"Beginner","diff":"Easy","author":"Trunkiez (TekkenDocs guide)","starters":["f,f+2","f,f+3","CH b+4"],"route":"uf+4 > f+3 > b+1,4 > uf+3,4 > uf+2,1","notes":"No electrics and no stances. Land any one of the starters, then do the route."},{"id":"hei-beginner-2","name":"Hell Sweep Pickup","cat":"Beginner","diff":"Easy","author":"Trunkiez (TekkenDocs guide)","starters":["f,n,d,df+4,4,n+4"],"route":"b+1,4 > uf+3,4 > uf+2,1","notes":"Easy damage after the full Hell Sweep string."},{"id":"hei-beginner-3","name":"Wind God Fist Route","cat":"Beginner","diff":"Medium","author":"Trunkiez (TekkenDocs guide)","starters":["f,n,d,df+2"],"route":"f,n,d,df+2 > f+3 > df+1 > f+3,D > RAI 2 > SS 2,F > RAI 1","notes":"First step toward the staple. Uses the easier Wind God Fist instead of the Electric. Written exactly as it appears in the source guide."},{"id":"hei-staple-1","name":"Electric Staple","cat":"Staple","diff":"Hard","author":"Trunkiez (TekkenDocs guide)","starters":["f,n,d,df:2","f,f+2"],"route":"f,n,d,df:2 > f,n,d,df:2 > f+3 > df+1 > f+3,D > FUJ 2 > SS 2,F > RAI 1","notes":"Main combo after an Electric or f,f+2. Two Electrics in a row is the hard part."},{"id":"hei-staple-2","name":"Counter-Hit Launcher Route","cat":"Staple","diff":"Hard","author":"Trunkiez (TekkenDocs guide)","starters":["CH b+4","f,f+3","FC df+2"],"route":"f,n,d,df:2 > f+3,D > df+4,4,1 > f+3,D > FUJ 2 > b:2* > d,df,f+2","notes":"Ends with qcf+2 for wall break."},{"id":"hei-staple-3","name":"Hell Sweep Staple","cat":"Staple","diff":"Hard","author":"Trunkiez (TekkenDocs guide)","starters":["CH f,n,d,df+4","f,n,d,df+4,4"],"route":"f,n,d,df:2 > f+3,D > df+4,4,1 > f+3,D > FUJ 2 > SS 2,F > RAI 1","notes":"Full combo from a counter-hit Hell Sweep or the two-kick Hell Sweep."},{"id":"hei-wall-1","name":"Wall Ender","cat":"Wall","diff":"Easy","author":"Trunkiez (TekkenDocs guide)","route":"df+3,1+2,1","notes":"Use when the opponent is splatted on the wall."},{"id":"hei-wall-2","name":"Wall Ender (alt)","cat":"Wall","diff":"Easy","author":"Trunkiez (TekkenDocs guide)","route":"b+3,2 > 1+2","notes":"Second option at the wall."},{"id":"hei-wall-3","name":"Wall Combo with Tornado","cat":"Wall","diff":"Medium","author":"Trunkiez (TekkenDocs guide)","route":"f,f+2 > 1+2 > df+3,1+2,1","notes":"Use at the wall when you have not used your tornado yet in the combo."},{"id":"hei-small-1","name":"Headbutt Follow-up","cat":"Small","diff":"Easy","author":"Trunkiez (TekkenDocs guide)","starters":["CH WS 2","f+1+2"],"route":"d,df,f+2","notes":"Guaranteed follow-up after a counter-hit while-standing 2 or the headbutt."},{"id":"hei-small-2","name":"While-Standing 1 Pickup","cat":"Small","diff":"Hard","author":"Trunkiez (TekkenDocs guide)","starters":["WS 1"],"route":"f,n,d,df:1","notes":"Needs the exact-timing version of the punch."},{"id":"hei-small-3","name":"Crouch Kick Pickup","cat":"Small","diff":"Easy","author":"Trunkiez (TekkenDocs guide)","starters":["FC df+4"],"route":"f,f+2","notes":"Low from crouch into f,f+2."}]}}/*DATA_END*/;
+const PACK_URL='https://raw.githubusercontent.com/naxrabot/combo-dojo/main/data/';
+const CATS=['Beginner','Staple','Wall','Small','Heat','Other'];
+const DIFFS=['Easy','Medium','Hard'];
+
+/* ---------- storage ---------- */
+const KEY='combodojo.v1';
+let S={mine:[],favs:[],packs:{},set:{style:'arcade',pad:'ps',text:false,name:''}};
+try{const r=JSON.parse(localStorage.getItem(KEY)||'null');if(r){S=Object.assign(S,r);S.set=Object.assign({style:'arcade',pad:'ps',text:false,name:''},r.set||{});}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+/* ---------- notation: text <-> tokens ---------- */
+const TAGS={CH:'On counter hit (your move hits while they are attacking)',WS:'While standing up from a crouch',FC:'While crouching',SS:'Sidestep first (tap up or down once)',DASH:'Dash forward (tap forward twice)',HEAT:'While you are in Heat',DELAY:'Wait a split second',
+  'T!':'The opponent spins here (tornado)','W!':'The opponent hits the wall here'};
+const SAY={CH:'on counter hit',WS:'while standing up from a crouch',FC:'while crouching',SS:'sidestep',DASH:'dash forward',HEAT:'while in Heat',DELAY:'wait a split second','T!':'the opponent spins',
+  'W!':'the opponent hits the wall'};
+const DIRNAME={f:'forward',b:'back',u:'up',d:'down',df:'down-forward',db:'down-back',uf:'up-forward',ub:'up-back'};
+const BTN={1:['Left Punch','Square','X'],2:['Right Punch','Triangle','Y'],3:['Left Kick','Cross','A'],4:['Right Kick','Circle','B']};
+const RE=/^(n|N|[fbud]{1,2}|[FBUD]{1,2})?([+:])?([1-4](?:\+[1-4])*)?(\*)?$/;
+function normDir(s){const l=s.toLowerCase();if(l==='n')return['n'];if(l.length===1)return[l];const a=l[0],c=l[1];if(a===c)return[a,a];
+  const v='ud'.includes(a)?a:'ud'.includes(c)?c:'',h='fb'.includes(a)?a:'fb'.includes(c)?c:'';return v&&h?[v+h]:null;}
+function parse(str,stances){const out=[];stances=stances||{};
+  String(str||'').split(/\s*(?:>|▶|→)\s*/).forEach(mv=>{mv=mv.trim().replace(/qcf\+?/gi,'d,df,f+').replace(/qcb\+?/gi,'d,db,b+');if(!mv)return;if(out.length)out.push({k:'n'});
+    mv.split(/[\s,]+/).forEach(p=>{if(!p)return;const m=RE.exec(p);
+      if(m&&(m[1]||m[3])){const dirs=m[1]?normDir(m[1]):[''];
+        if(dirs){const h=!!m[1]&&m[1].toLowerCase()!=='n'&&m[1]===m[1].toUpperCase();
+          const b=m[3]?[...new Set(m[3].split('+'))].sort().join('+'):'';
+          dirs.forEach((d,i)=>{const last=i===dirs.length-1;out.push({k:'i',d:d,h:h&&d!=='n',b:last?b:'',j:last&&m[2]===':',x:last&&!!m[4]});});return;}}
+      const u=p.toUpperCase();if(TAGS[u]||stances[u]){out.push({k:'t',v:u});return;}
+      out.push({k:'t',v:p,q:1});});});
+  return out;}
+function inText(t){const d=t.h?t.d.toUpperCase():t.d;return d+(t.b?(t.j?':':(d?'+':''))+t.b:'')+(t.x?'*':'');}
+function ser(toks){let s='',prev=null;toks.forEach(t=>{if(t.k==='n'){s+=' > ';prev=null;return;}
+  const piece=t.k==='i'?inText(t):t.v;if(prev)s+=(prev.k==='i'&&t.k==='i')?',':' ';s+=piece;prev=t;});return s.trim();}
+
+/* ---------- pictures ---------- */
+const STAR=(()=>{let p=[];for(let i=0;i<10;i++){const r=i%2?4.8:11.5,a=-Math.PI/2+i*Math.PI/5;p.push((20+r*Math.cos(a)).toFixed(1)+','+(20+r*Math.sin(a)).toFixed(1));}return p.join(' ');})();
+function svgDir(d,hold){const bg=hold?'#efe8d6':'#2c3650',fg=hold?'#121724':'#efe8d6';
+  const inner=d==='n'?`<polygon points="${STAR}" fill="${fg}"/>`:`<path transform="rotate(${[0,45,90,135,180,225,270,315][['f','df','d','db','b','ub','u','uf'].indexOf(d)]} 20 20)" d="M8 16.5h13V9.5L33 20 21 30.5v-7H8z" fill="${fg}"/>`;
+  return `<svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="${bg}"/>${inner}</svg>`;}
+const POS={arcade:{1:[13,13],2:[27,13],3:[13,27],4:[27,27]},pad:{1:[9.5,20],2:[20,9.5],3:[20,30.5],4:[30.5,20]}};
+function svgBtn(b){const on=b.split('+'),P=POS[S.set.style]||POS.arcade,r=S.set.style==='pad'?5.4:5.8;let c='';
+  for(const n of [1,2,3,4]){const hit=on.includes(String(n));c+=`<circle cx="${P[n][0]}" cy="${P[n][1]}" r="${r}" fill="${hit?'#e0b84c':'none'}" stroke="${hit?'#e0b84c':'#5b6788'}" stroke-width="1.8"/>`;}
+  return `<svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="#2c3650"/>${c}</svg>`;}
+function btnName(n){const a=BTN[n];return S.set.pad==='ps'?`${a[0]} (${a[1]})`:S.set.pad==='xbox'?`${a[0]} (${a[2]})`:a[0];}
+function sayInput(t){if(t.d==='n'&&!t.b)return 'let go of the direction';
+  const btn=t.b?t.b.split('+').map(btnName).join(' + '):'';let s='';
+  if(t.d==='n')s='from neutral, press '+btn;
+  else if(t.d&&t.b)s=`${t.h?'hold':'tap'} ${DIRNAME[t.d]} and press ${btn}`;
+  else if(t.d)s=`${t.h?'hold':'tap'} ${DIRNAME[t.d]}`;
+  else s='press '+btn;
+  if(t.j)s+=' at the exact same moment';if(t.x)s+=' and keep the button held';return s;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function chipHTML(t,i,sel){const at=i==null?'':` data-ti="${i}"`,sc=sel===i&&i!=null?' sel':'';
+  if(t.k==='n')return `<span class="nx${sc}"${at}>▶</span>`;
+  if(t.k==='t')return `<span class="tag${curStances()[t.v]?' st':''}${sc}"${at}>${esc(t.v)}</span>`;
+  return `<span class="chip${t.j?' jf':''}${sc}"${at} aria-label="${esc(sayInput(t))}"><span class="row">${t.d?svgDir(t.d,t.h):''}${t.b?svgBtn(t.b):''}</span>${t.j?'<span class="badge">⚡</span>':''}${t.x?'<span class="badge hold">hold</span>':''}${S.set.text?`<i class="tx">${esc(inText(t))}</i>`:''}</span>`;}
+function seqHTML(toks,sel,idx){return `<div class="seq">${toks.map((t,i)=>chipHTML(t,idx?i:null,sel)).join('')}</div>`;}
+function pic(n){return seqHTML(parse(n,curStances()));}
+function movesOf(toks){const m=[[]];toks.forEach(t=>{if(t.k==='n')m.push([]);else m[m.length-1].push(t);});return m.filter(x=>x.length);}
+function sayMove(mv){const st=curStances();const parts=mv.map(t=>t.k==='i'?sayInput(t):st[t.v]?'from '+t.v+' stance':(SAY[t.v]||t.v));
+  let s=parts.join(', then ').replace(/(stance|hit|crouch|crouching|Heat), then /g,'$1, ');return s.charAt(0).toUpperCase()+s.slice(1)+'.';}
+
+/* ---------- data ---------- */
+let CH='heihachi';
+function pack(){const base=PACKS[CH]||{moves:[],combos:[],stances:{}},up=S.packs[CH];return up&&up.packVersion>(base.packVersion||0)?up:base;}
+function curStances(){return pack().stances||{};}
+function community(){return (pack().combos||[]).map(c=>Object.assign({char:CH,src:'community'},c));}
+function mine(){return S.mine.filter(c=>c.char===CH).map(c=>Object.assign({src:'mine'},c));}
+function find(id){return community().concat(mine()).find(c=>c.id===id);}
+function fullNotation(c){return (c.starters&&c.starters.length?c.starters[0]+' > ':'')+c.route;}
+
+/* ---------- views ---------- */
+let V={name:'home',tab:'community',cat:'All'};let B=null;let armed='';
+const app=document.getElementById('app'),sheet=document.getElementById('sheet');
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2200);}
+function go(v){V=Object.assign({cat:V.cat,tab:V.tab},v);armed='';render();window.scrollTo(0,0);}
+function render(){app.innerHTML=V.name==='detail'?vDetail():V.name==='build'?vBuild():V.name==='help'?vHelp():vHome();}
+
+function cardHTML(c){const fav=S.favs.includes(c.id);
+  return `<button class="card" data-act="open" data-id="${esc(c.id)}"><h3>${fav?'★ ':''}${esc(c.name)}</h3>
+  <div class="meta"><span>${esc(c.cat)}</span><span class="diff-${esc(c.diff)}">${esc(c.diff)}</span><span>by ${esc(c.author||'you')}</span></div>
+  <div class="strip">${pic(fullNotation(c))}</div></button>`;}
+function vHome(){let list=V.tab==='community'?community():V.tab==='mine'?mine():community().concat(mine()).filter(c=>S.favs.includes(c.id));
+  const cats=['All'].concat(CATS.filter(k=>list.some(c=>c.cat===k)));if(!cats.includes(V.cat))V.cat='All';
+  if(V.cat!=='All')list=list.filter(c=>c.cat===V.cat);
+  const empty=V.tab==='mine'?'You have not made a combo yet. Tap “Make a combo” to build your first one.':V.tab==='saved'?'Nothing saved yet. Open a combo and tap Save to keep it here.':'No combos in this group yet.';
+  return `<div class="top"><h1>Combo Dojo<small>${esc(pack().name||'')} combos for Tekken 8</small></h1><button class="iconbtn" data-act="help">Guide</button></div>
+  <div class="tabs">${[['community','Community'],['mine','My combos'],['saved','Saved']].map(t=>`<button class="${V.tab===t[0]?'on':''}" data-act="tab" data-v="${t[0]}">${t[1]}</button>`).join('')}</div>
+  <div class="chips">${cats.map(k=>`<button class="chipbtn ${V.cat===k?'on':''}" data-act="cat" data-v="${k}">${k}</button>`).join('')}</div>
+  ${list.length?list.map(cardHTML).join(''):`<p class="empty">${empty}</p>`}
+  <div class="fab"><button class="big" data-act="new">Make a combo</button></div>`;}
+
+function vDetail(){const c=find(V.id);if(!c){V={name:'home',tab:V.tab,cat:V.cat};return vHome();}
+  const st=curStances(),fav=S.favs.includes(c.id),route=parse(c.route,st);
+  const starters=(c.starters||[]).map(s=>pic(s)).join('<div class="or">or</div>');
+  return `<div class="top"><button class="iconbtn" data-act="home">Back</button><h1>${esc(c.name)}</h1></div>
+  <div class="meta"><span>${esc(c.cat)}</span><span class="diff-${esc(c.diff)}">${esc(c.diff)}</span><span>by ${esc(c.author||'you')}</span></div>
+  <div class="detail">
+  ${starters?`<h2 class="sec">Start with</h2><div class="box">${starters}</div><h2 class="sec">Then do</h2>`:''}
+  <div class="box">${seqHTML(route)}</div></div>
+  ${c.notes?`<p class="hint">${esc(c.notes)}</p>`:''}
+  <div class="btnrow"><button data-act="fav" data-id="${esc(c.id)}">${fav?'★ Saved':'☆ Save'}</button><button data-act="share" data-id="${esc(c.id)}">Share</button>
+  ${c.src==='mine'?`<button data-act="edit" data-id="${esc(c.id)}">Edit</button>`:`<button data-act="remix" data-id="${esc(c.id)}">Make my version</button>`}</div>
+  <h2 class="sec">Step by step</h2>
+  <div class="box"><ol class="steps">${movesOf(route).map(m=>`<li><div>${seqHTML(m)}</div><p>${esc(sayMove(m))}</p></li>`).join('')}</ol></div>
+  ${c.src==='mine'?`<div class="btnrow"><button class="warn" data-act="del" data-id="${esc(c.id)}">${armed===c.id?'Tap again to delete':'Delete combo'}</button></div>`:''}`;}
+
+function newB(c){B={id:c&&c.src==='mine'?c.id:null,name:c?(c.src==='mine'?c.name:c.name+' (my version)'):'',cat:c?c.cat:'Staple',diff:c?c.diff:'Easy',notes:c&&c.src==='mine'?c.notes||'':'',
+  toks:c?parse(fullNotation(c),curStances()):[],sel:-1,st:{d:'',h:false,b:[],j:false,x:false}};}
+function stageTok(){const s=B.st;if(!s.d&&!s.b.length)return null;return {k:'i',d:s.d,h:s.h&&!!s.d&&s.d!=='n',b:s.b.slice().sort().join('+'),j:s.j&&s.b.length>0,x:s.x&&s.b.length>0};}
+function insert(t){if(B.sel>=0&&B.sel<B.toks.length){B.toks.splice(B.sel+1,0,t);B.sel++;}else B.toks.push(t);}
+function vBuild(){const st=B.st,tok=stageTok(),stn=curStances();
+  const dirs=['ub','u','uf','b','n','f','db','d','df'];
+  return `<div class="top"><button class="iconbtn" data-act="home">Cancel</button><h1>${B.id?'Edit combo':'Make a combo'}</h1></div>
+  <h2 class="sec">Your combo</h2>
+  <div class="box build">${B.toks.length?seqHTML(B.toks,B.sel,true):'<p class="hint" style="margin:0">Empty so far. Add presses with the pads below, or tap a ready-made move.</p>'}</div>
+  <div class="btnrow"><button data-act="b-next">Next move ▶</button><button data-act="b-rm">${B.sel>=0?'Remove selected':'Undo last'}</button><button class="warn" data-act="b-clear">${armed==='clear'?'Tap again':'Clear'}</button></div>
+  <p class="hint">Tap any picture in your combo to select it. New presses go right after the selected one.</p>
+
+  <h2 class="sec">Add a press</h2>
+  <div class="box">
+    <div class="pads">
+      <div><p class="hint">Direction</p><div class="pad d">${dirs.map(d=>`<button class="${st.d===d?'on':''}" data-act="b-dir" data-v="${d}" aria-label="${d==='n'?'neutral':DIRNAME[d]}">${svgDir(d,false)}</button>`).join('')}</div></div>
+      <div><p class="hint">Buttons</p><div class="pad b">${[1,2,3,4].map(n=>`<button class="${st.b.includes(String(n))?'on':''}" data-act="b-btn" data-v="${n}"><span><b>${n}</b>${BTN[n][0].replace(' ','<br>')}</span></button>`).join('')}</div></div>
+    </div>
+    <div class="tog"><button class="${st.h?'on':''}" data-act="b-tog" data-v="h">Hold direction</button><button class="${st.j?'on':''}" data-act="b-tog" data-v="j">⚡ Exact timing</button><button class="${st.x?'on':''}" data-act="b-tog" data-v="x">Hold button</button></div>
+    <div class="stagebox" style="margin-top:12px">${tok?seqHTML([tok])+`<p class="hint" style="margin:6px 0 0">${esc(sayMove([tok]))}</p>`:'<p class="hint" style="margin:0">Pick a direction, buttons, or both. They are pressed together.</p>'}</div>
+    <div class="btnrow" style="margin-bottom:0"><button class="go" data-act="b-add">Add this press</button></div>
+  </div>
+
+  <h2 class="sec">Add a situation or stance</h2>
+  <div class="box"><div class="tagrow">${Object.keys(stn).concat(Object.keys(TAGS)).map(t=>`<button data-act="b-tag" data-v="${esc(t)}">${esc(t)}</button>`).join('')}</div>
+  <p class="hint" style="margin:10px 0 0">The Guide explains what each one means.</p></div>
+
+  <h2 class="sec">Ready-made ${esc(pack().name||'')} moves</h2>
+  <div class="box">${(pack().moves||[]).map((m,i)=>`<button class="qm" data-act="b-move" data-v="${i}"><span><b>${esc(m.label)}</b><i>${esc(m.tip||'')}</i></span><div class="strip">${pic(m.n)}</div></button>`).join('')}</div>
+
+  <h2 class="sec">Details</h2>
+  <div class="box"><label class="f" for="bn">Name</label><input class="t" id="bn" data-f="name" value="${esc(B.name)}" placeholder="My launcher combo" maxlength="60">
+  <div class="two"><div><label class="f" for="bc">Type</label><select class="t" id="bc" data-f="cat">${CATS.map(k=>`<option ${B.cat===k?'selected':''}>${k}</option>`).join('')}</select></div>
+  <div><label class="f" for="bd">Difficulty</label><select class="t" id="bd" data-f="diff">${DIFFS.map(k=>`<option ${B.diff===k?'selected':''}>${k}</option>`).join('')}</select></div></div>
+  <label class="f" for="bo">Notes</label><textarea class="t" id="bo" data-f="notes" placeholder="Tips, damage, when to use it" maxlength="400">${esc(B.notes)}</textarea></div>
+  <div class="fab"><button class="big" data-act="b-save">Save combo</button></div>`;}
+
+function vHelp(){const st=curStances(),set=S.set;
+  const L=(n,t)=>`<div>${pic(n)}</div><div>${t}</div>`;
+  const opt=(k,v,l)=>`<button class="${set[k]===v?'on':''}" data-act="set" data-k="${k}" data-v="${v}">${l}</button>`;
+  return `<div class="top"><button class="iconbtn" data-act="home">Back</button><h1>Guide and settings</h1></div>
+  <h2 class="sec">How to read a combo</h2>
+  <div class="box"><p class="hint">Directions assume your character is on the left, facing right.</p><div class="legend">
+  ${L('f','Tap the direction shown.')}${L('F','Light tile: hold the direction.')}${L('n','Star: let go of the direction.')}
+  ${L('1','Left Punch'+(set.pad==='ps'?' (Square)':set.pad==='xbox'?' (X)':''))}${L('2','Right Punch'+(set.pad==='ps'?' (Triangle)':set.pad==='xbox'?' (Y)':''))}
+  ${L('3','Left Kick'+(set.pad==='ps'?' (Cross)':set.pad==='xbox'?' (A)':''))}${L('4','Right Kick'+(set.pad==='ps'?' (Circle)':set.pad==='xbox'?' (B)':''))}
+  ${L('1+2','Two lit dots: press both together.')}${L('df+2','Arrow and button side by side: press them together.')}
+  ${L('df:2','Blue ring with ⚡: press at the exact same moment.')}${L('1 > 2','▶ separates one move from the next.')}</div></div>
+  <h2 class="sec">Situations and stances</h2>
+  <div class="box"><div class="legend">${Object.keys(st).map(k=>L(k,esc(st[k]))).join('')}${Object.keys(TAGS).map(k=>L(k,esc(TAGS[k]))).join('')}</div></div>
+  <h2 class="sec">Settings</h2>
+  <div class="box"><p class="hint">Button picture layout</p><div class="tog" style="margin-top:0">${opt('style','arcade','Arcade square')}${opt('style','pad','Controller diamond')}</div>
+  <p class="hint" style="margin-top:14px">Button names in explanations</p><div class="tog" style="margin-top:0">${opt('pad','ps','PlayStation')}${opt('pad','xbox','Xbox')}${opt('pad','none','Plain')}</div>
+  <p class="hint" style="margin-top:14px">Number notation under pictures</p><div class="tog" style="margin-top:0"><button class="${set.text?'on':''}" data-act="settext" data-v="1">Show</button><button class="${!set.text?'on':''}" data-act="settext" data-v="">Hide</button></div>
+  <label class="f" for="sn">Your name (shown on combos you share)</label><input class="t" id="sn" data-s="name" value="${esc(set.name)}" maxlength="30" placeholder="Player"></div>
+  <h2 class="sec">Combos from other people</h2>
+  <div class="box"><p class="hint">Got a combo code from a friend? Paste it here.</p><textarea class="t" id="imp" placeholder="CD1...."></textarea>
+  <div class="btnrow"><button class="go" data-act="import">Add to my combos</button></div>
+  <p class="hint">Community pack version ${esc(pack().packVersion||1)}, checked against game version ${esc(pack().gameVersion||'?')}.</p>
+  <div class="btnrow" style="margin-bottom:0"><button data-act="update">Check for new community combos</button></div></div>`;}
+
+/* ---------- share / import ---------- */
+function enc(o){return 'CD1.'+btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function dec(s){const m=/CD1\.([A-Za-z0-9_-]+)/.exec(s||'');if(!m)return null;try{return JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')))));}catch(e){return null;}}
+function shareText(c){const o={name:c.name,char:c.char||CH,cat:c.cat,diff:c.diff,author:c.src==='mine'?(c.author||S.set.name||'Player'):c.author,route:c.route,notes:c.notes||''};if(c.starters)o.starters=c.starters;
+  return `${c.name} (${pack().name}) from Combo Dojo\n${fullNotation(c)}\n\nPaste this code into Combo Dojo:\n${enc(o)}`;}
+function openShare(c){const t=shareText(c);
+  sheet.innerHTML=`<div class="sheet" data-act="closesheet"><div><h2>Share this combo</h2><p class="hint">Send this to a friend. They paste the code in Guide, under “Combos from other people”.</p>
+  <textarea class="t" id="sh" readonly rows="6">${esc(t)}</textarea><div class="btnrow"><button class="go" data-act="copy">Copy</button>${window.AndroidBridge?'<button data-act="send">Send with…</button>':''}<button data-act="closesheet" data-force="1">Close</button></div></div></div>`;}
+function doCopy(t){if(window.AndroidBridge&&AndroidBridge.copy){AndroidBridge.copy(t);toast('Copied');return;}
+  const fb=()=>{const a=document.getElementById('sh');if(a){a.select();try{document.execCommand('copy');toast('Copied');}catch(e){toast('Select the text and copy it');}}};
+  try{navigator.clipboard.writeText(t).then(()=>toast('Copied'),fb);}catch(e){fb();}}
+
+/* ---------- events ---------- */
+document.addEventListener('input',e=>{const el=e.target;if(el.dataset.f&&B)B[el.dataset.f]=el.value;if(el.dataset.s){S.set[el.dataset.s]=el.value;save();}});
+document.addEventListener('click',e=>{
+  const ti=e.target.closest('[data-ti]');
+  if(ti&&B&&V.name==='build'){const i=+ti.dataset.ti;B.sel=B.sel===i?-1:i;render();return;}
+  const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act,v=el.dataset.v,id=el.dataset.id;
+  if(a!=='del'&&a!=='b-clear')armed='';
+  switch(a){
+    case 'home':B=null;go({name:'home'});break;
+    case 'help':go({name:'help'});break;
+    case 'tab':V.tab=v;V.cat='All';render();break;
+    case 'cat':V.cat=v;render();break;
+    case 'open':go({name:'detail',id:id});break;
+    case 'new':newB(null);go({name:'build'});break;
+    case 'edit':case 'remix':newB(find(id));go({name:'build'});break;
+    case 'fav':{const i=S.favs.indexOf(id);if(i<0)S.favs.push(id);else S.favs.splice(i,1);save();render();toast(i<0?'Saved':'Removed from Saved');break;}
+    case 'del':if(armed===id){S.mine=S.mine.filter(c=>c.id!==id);S.favs=S.favs.filter(x=>x!==id);save();toast('Deleted');go({name:'home',tab:'mine'});}else{armed=id;render();}break;
+    case 'share':openShare(find(id));break;
+    case 'closesheet':if(e.target===el||el.dataset.force)sheet.innerHTML='';break;
+    case 'copy':doCopy(document.getElementById('sh').value);break;
+    case 'send':AndroidBridge.share(document.getElementById('sh').value);break;
+    case 'set':S.set[el.dataset.k]=v;save();render();break;
+    case 'settext':S.set.text=!!v;save();render();break;
+    case 'import':{const o=dec(document.getElementById('imp').value);
+      if(!o||!o.route||!parse(o.route).length){toast('That code did not work. Copy the whole line starting with CD1.');break;}
+      S.mine.push({id:'m'+Date.now(),char:o.char||CH,name:String(o.name||'Imported combo').slice(0,60),cat:CATS.includes(o.cat)?o.cat:'Other',diff:DIFFS.includes(o.diff)?o.diff:'Medium',author:String(o.author||'a friend').slice(0,30),starters:Array.isArray(o.starters)?o.starters.map(String).slice(0,5):undefined,route:String(o.route),notes:String(o.notes||'').slice(0,400)});
+      save();toast('Added to My combos');go({name:'home',tab:'mine'});break;}
+    case 'update':toast('Checking…');fetch(PACK_URL+CH+'.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.json();}).then(p=>{
+        if(p&&Array.isArray(p.combos)&&p.packVersion>(pack().packVersion||0)){S.packs[CH]=p;save();render();toast('Community combos updated');}else toast('You already have the latest combos');
+      }).catch(()=>toast('Could not reach the community list. Check your connection.'));break;
+    /* builder */
+    case 'b-dir':B.st.d=B.st.d===v?'':v;render();break;
+    case 'b-btn':{const i=B.st.b.indexOf(v);if(i<0)B.st.b.push(v);else B.st.b.splice(i,1);render();break;}
+    case 'b-tog':B.st[v]=!B.st[v];render();break;
+    case 'b-add':{const t=stageTok();if(!t){toast('Pick a direction or a button first');break;}insert(t);B.st={d:'',h:false,b:[],j:false,x:false};render();break;}
+    case 'b-next':{const at=B.sel>=0?B.sel:B.toks.length-1;if(at<0||B.toks[at].k==='n'){toast('Add a press first');break;}insert({k:'n'});render();break;}
+    case 'b-tag':insert({k:'t',v:v});render();break;
+    case 'b-move':{const m=pack().moves[+v];const at=B.sel>=0?B.sel:B.toks.length-1;if(at>=0&&B.toks[at].k!=='n')insert({k:'n'});parse(m.n,curStances()).forEach(insert);render();toast(m.label+' added');break;}
+    case 'b-rm':if(!B.toks.length)break;if(B.sel>=0){B.toks.splice(B.sel,1);B.sel=Math.min(B.sel,B.toks.length-1);if(!B.toks.length)B.sel=-1;}else B.toks.pop();render();break;
+    case 'b-clear':if(armed==='clear'){B.toks=[];B.sel=-1;armed='';}else armed='clear';render();break;
+    case 'b-save':{while(B.toks.length&&B.toks[B.toks.length-1].k==='n')B.toks.pop();while(B.toks.length&&B.toks[0].k==='n')B.toks.shift();
+      if(!B.toks.length){toast('Add at least one press before saving');break;}
+      const c={id:B.id||'m'+Date.now(),char:CH,name:(B.name||'').trim()||'My combo',cat:B.cat,diff:B.diff,notes:(B.notes||'').trim(),route:ser(B.toks),author:S.set.name||''};
+      const i=S.mine.findIndex(x=>x.id===c.id);if(i<0)S.mine.push(c);else S.mine[i]=c;save();B=null;toast('Combo saved');go({name:'detail',id:c.id,tab:'mine'});break;}
+  }
+});
+/* Android back button: returns true when the app handled it */
+window.cdBack=function(){if(sheet.innerHTML){sheet.innerHTML='';return true;}if(V.name!=='home'){B=null;go({name:'home'});return true;}return false;};
+render();
+</script>
+</body>
+</html>

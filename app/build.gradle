@@ -1,0 +1,49 @@
+plugins {
+    id 'com.android.application'
+}
+
+def buildNumber = (System.getenv('GITHUB_RUN_NUMBER') ?: '1') as Integer
+
+android {
+    namespace 'studio.mbrew.combodojo'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'studio.mbrew.combodojo'
+        minSdk 26
+        targetSdk 34
+        versionCode buildNumber
+        versionName "0.1.${buildNumber}"
+    }
+
+    // One fixed key for every build, so a new APK installs over the old one
+    // and saved combos are kept. This is a hobby key, not a Play Store key.
+    signingConfigs {
+        shared {
+            storeFile rootProject.file('keystore/combo-dojo.keystore')
+            storePassword 'combodojo'
+            keyAlias 'combodojo'
+            keyPassword 'combodojo'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.shared
+        }
+        release {
+            signingConfig signingConfigs.shared
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}

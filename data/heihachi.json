@@ -1,0 +1,162 @@
+{
+  "id": "heihachi",
+  "name": "Heihachi",
+  "packVersion": 1,
+  "gameVersion": "2.09",
+  "stances": {
+    "FUJ": "Wind God's Kamae stance. Hold down after moves like f+3 or f+4 to enter it.",
+    "RAI": "Thunder God's Kamae stance. Hold forward after sidestep 2 (and some other moves) to enter it."
+  },
+  "moves": [
+    { "n": "f,n,d,df:2", "label": "Electric (EWGF)", "tip": "Launcher. Press 2 at the exact moment you hit down-forward." },
+    { "n": "f,n,d,df+2", "label": "Wind God Fist", "tip": "Same launcher without the exact timing. Easier." },
+    { "n": "f,n,d,df+4", "label": "Hell Sweep", "tip": "Low sweep." },
+    { "n": "f,n,d,df+4,4", "label": "Hell Sweep x2", "tip": "Hell Sweep with the second kick." },
+    { "n": "1,1,2", "label": "Jab string", "tip": "Fast punches. Wall splats." },
+    { "n": "df+1", "label": "Mid poke", "tip": "Quick mid. Used to carry in combos." },
+    { "n": "df+1,2", "label": "Mid poke x2", "tip": "Mid poke with the follow-up." },
+    { "n": "f+3", "label": "Long mid kick", "tip": "Long range mid." },
+    { "n": "f+3,D", "label": "Mid kick into FUJ", "tip": "Hold down after the kick to enter FUJ stance." },
+    { "n": "f+4", "label": "f+4", "tip": "Safe mid. Can go into FUJ stance." },
+    { "n": "b+4", "label": "Counter-hit launcher", "tip": "Launches when it interrupts their attack." },
+    { "n": "b+3", "label": "Homing kick", "tip": "Catches sidesteps." },
+    { "n": "uf+4", "label": "Hop kick", "tip": "Homing, goes over lows." },
+    { "n": "uf+3,4", "label": "Jumping launcher", "tip": "Also used to carry in combos." },
+    { "n": "uf+2,1", "label": "Combo ender", "tip": "Simple ender for beginner routes." },
+    { "n": "b+1,4", "label": "b+1,4", "tip": "Combo filler in beginner routes." },
+    { "n": "df+4,4,1", "label": "df+4,4,1", "tip": "Combo filler in staple routes." },
+    { "n": "FUJ 2", "label": "FUJ launcher", "tip": "Mid launcher from FUJ stance." },
+    { "n": "SS 2,F", "label": "Sidestep 2 into RAI", "tip": "Hold forward after the punch to enter RAI stance." },
+    { "n": "RAI 1", "label": "RAI wall splat", "tip": "Mid from RAI stance. Wall splats." },
+    { "n": "RAI 2", "label": "RAI guard break", "tip": "Guard break from RAI stance." },
+    { "n": "f+1+2", "label": "Headbutt", "tip": "Fast punisher." },
+    { "n": "f,f+1+2", "label": "Heat engager", "tip": "Advancing mid that starts Heat." },
+    { "n": "b+1+2", "label": "Parry", "tip": "Parry that starts Heat." },
+    { "n": "d,df,f+2", "label": "qcf+2", "tip": "Wall break ender. Starts Heat." },
+    { "n": "uf+1", "label": "Power crush", "tip": "Absorbs hits. Wall splats." },
+    { "n": "d+3", "label": "Floor break", "tip": "Ender for breakable floors." },
+    { "n": "df+3,1+2,1", "label": "Wall ender", "tip": "Standard wall combo." },
+    { "n": "1+4", "label": "Warrior Instinct", "tip": "Heihachi's power-up." },
+    { "n": "2+3", "label": "Heat Burst", "tip": "Starts Heat." },
+    { "n": "f,f", "label": "Dash", "tip": "Tap forward twice to close the gap." }
+  ],
+  "combos": [
+    {
+      "id": "hei-beginner-1",
+      "name": "First Combo",
+      "cat": "Beginner",
+      "diff": "Easy",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "starters": ["f,f+2", "f,f+3", "CH b+4"],
+      "route": "uf+4 > f+3 > b+1,4 > uf+3,4 > uf+2,1",
+      "notes": "No electrics and no stances. Land any one of the starters, then do the route."
+    },
+    {
+      "id": "hei-beginner-2",
+      "name": "Hell Sweep Pickup",
+      "cat": "Beginner",
+      "diff": "Easy",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "starters": ["f,n,d,df+4,4,n+4"],
+      "route": "b+1,4 > uf+3,4 > uf+2,1",
+      "notes": "Easy damage after the full Hell Sweep string."
+    },
+    {
+      "id": "hei-beginner-3",
+      "name": "Wind God Fist Route",
+      "cat": "Beginner",
+      "diff": "Medium",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "starters": ["f,n,d,df+2"],
+      "route": "f,n,d,df+2 > f+3 > df+1 > f+3,D > RAI 2 > SS 2,F > RAI 1",
+      "notes": "First step toward the staple. Uses the easier Wind God Fist instead of the Electric. Written exactly as it appears in the source guide."
+    },
+    {
+      "id": "hei-staple-1",
+      "name": "Electric Staple",
+      "cat": "Staple",
+      "diff": "Hard",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "starters": ["f,n,d,df:2", "f,f+2"],
+      "route": "f,n,d,df:2 > f,n,d,df:2 > f+3 > df+1 > f+3,D > FUJ 2 > SS 2,F > RAI 1",
+      "notes": "Main combo after an Electric or f,f+2. Two Electrics in a row is the hard part."
+    },
+    {
+      "id": "hei-staple-2",
+      "name": "Counter-Hit Launcher Route",
+      "cat": "Staple",
+      "diff": "Hard",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "starters": ["CH b+4", "f,f+3", "FC df+2"],
+      "route": "f,n,d,df:2 > f+3,D > df+4,4,1 > f+3,D > FUJ 2 > b:2* > d,df,f+2",
+      "notes": "Ends with qcf+2 for wall break."
+    },
+    {
+      "id": "hei-staple-3",
+      "name": "Hell Sweep Staple",
+      "cat": "Staple",
+      "diff": "Hard",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "starters": ["CH f,n,d,df+4", "f,n,d,df+4,4"],
+      "route": "f,n,d,df:2 > f+3,D > df+4,4,1 > f+3,D > FUJ 2 > SS 2,F > RAI 1",
+      "notes": "Full combo from a counter-hit Hell Sweep or the two-kick Hell Sweep."
+    },
+    {
+      "id": "hei-wall-1",
+      "name": "Wall Ender",
+      "cat": "Wall",
+      "diff": "Easy",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "route": "df+3,1+2,1",
+      "notes": "Use when the opponent is splatted on the wall."
+    },
+    {
+      "id": "hei-wall-2",
+      "name": "Wall Ender (alt)",
+      "cat": "Wall",
+      "diff": "Easy",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "route": "b+3,2 > 1+2",
+      "notes": "Second option at the wall."
+    },
+    {
+      "id": "hei-wall-3",
+      "name": "Wall Combo with Tornado",
+      "cat": "Wall",
+      "diff": "Medium",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "route": "f,f+2 > 1+2 > df+3,1+2,1",
+      "notes": "Use at the wall when you have not used your tornado yet in the combo."
+    },
+    {
+      "id": "hei-small-1",
+      "name": "Headbutt Follow-up",
+      "cat": "Small",
+      "diff": "Easy",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "starters": ["CH WS 2", "f+1+2"],
+      "route": "d,df,f+2",
+      "notes": "Guaranteed follow-up after a counter-hit while-standing 2 or the headbutt."
+    },
+    {
+      "id": "hei-small-2",
+      "name": "While-Standing 1 Pickup",
+      "cat": "Small",
+      "diff": "Hard",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "starters": ["WS 1"],
+      "route": "f,n,d,df:1",
+      "notes": "Needs the exact-timing version of the punch."
+    },
+    {
+      "id": "hei-small-3",
+      "name": "Crouch Kick Pickup",
+      "cat": "Small",
+      "diff": "Easy",
+      "author": "Trunkiez (TekkenDocs guide)",
+      "starters": ["FC df+4"],
+      "route": "f,f+2",
+      "notes": "Low from crouch into f,f+2."
+    }
+  ]
+}
