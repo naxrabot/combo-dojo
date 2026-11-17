@@ -165,8 +165,10 @@ function svgDir(d,hold){const bg=hold?'#efe8d6':'#2c3650',fg=hold?'#121724':'#ef
   const inner=d==='n'?`<polygon points="${STAR}" fill="${fg}"/>`:`<path transform="rotate(${[0,45,90,135,180,225,270,315][['f','df','d','db','b','ub','u','uf'].indexOf(d)]} 20 20)" d="M8 16.5h13V9.5L33 20 21 30.5v-7H8z" fill="${fg}"/>`;
   return `<svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="${bg}"/>${inner}</svg>`;}
 const POS={arcade:{1:[13,13],2:[27,13],3:[13,27],4:[27,27]},pad:{1:[9.5,20],2:[20,9.5],3:[20,30.5],4:[30.5,20]}};
+const COLORS={ps:{1:'#e88bd2',2:'#3fd6a5',3:'#7aa7ff',4:'#ff6a5e'},xbox:{1:'#4c9bff',2:'#f2c53d',3:'#5fd35f',4:'#ff5d5d'}};
+function btnColor(n){return (COLORS[S.set.pad]||{})[n]||'#e0b84c';}
 function svgBtn(b){const on=b.split('+'),P=POS[S.set.style]||POS.arcade,r=S.set.style==='pad'?5.4:5.8;let c='';
-  for(const n of [1,2,3,4]){const hit=on.includes(String(n));c+=`<circle cx="${P[n][0]}" cy="${P[n][1]}" r="${r}" fill="${hit?'#e0b84c':'none'}" stroke="${hit?'#e0b84c':'#5b6788'}" stroke-width="1.8"/>`;}
+  for(const n of [1,2,3,4]){const hit=on.includes(String(n));c+=`<circle cx="${P[n][0]}" cy="${P[n][1]}" r="${r}" fill="${hit?btnColor(n):'none'}" stroke="${hit?btnColor(n):'#5b6788'}" stroke-width="1.8"/>`;}
   return `<svg class="ic" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="#2c3650"/>${c}</svg>`;}
 function btnName(n){const a=BTN[n];return S.set.pad==='ps'?`${a[0]} (${a[1]})`:S.set.pad==='xbox'?`${a[0]} (${a[2]})`:a[0];}
 function sayInput(t){if(t.d==='n'&&!t.b)return 'let go of the direction';
@@ -249,7 +251,7 @@ function vBuild(){const st=B.st,tok=stageTok(),stn=curStances();
   else body=`<div class="box">
     <div class="pads">
       <div><p class="hint">Direction</p><div class="pad d">${dirs.map(d=>`<button class="${st.d===d?'on':''}" data-act="b-dir" data-v="${d}" aria-label="${d==='n'?'neutral':DIRNAME[d]}">${svgDir(d,false)}</button>`).join('')}</div></div>
-      <div><p class="hint">Buttons</p><div class="pad b">${[1,2,3,4].map(n=>`<button class="${st.b.includes(String(n))?'on':''}" data-act="b-btn" data-v="${n}"><span><b>${n}</b>${BTN[n][0].replace(' ','<br>')}</span></button>`).join('')}</div></div>
+      <div><p class="hint">Buttons</p><div class="pad b">${[1,2,3,4].map(n=>`<button class="${st.b.includes(String(n))?'on':''}" ${st.b.includes(String(n))?`style="background:${btnColor(n)}"`:''} data-act="b-btn" data-v="${n}"><span><b ${st.b.includes(String(n))?'':`style="color:${btnColor(n)}"`}>${n}</b>${BTN[n][0].replace(' ','<br>')}</span></button>`).join('')}</div></div>
     </div>
     <div class="tog"><button class="${st.h?'on':''}" data-act="b-tog" data-v="h">Hold direction</button><button class="${st.j?'on':''}" data-act="b-tog" data-v="j">⚡ Exact timing</button><button class="${st.x?'on':''}" data-act="b-tog" data-v="x">Hold button</button></div>
     <div class="stagebox" style="margin-top:12px">${tok?seqHTML([tok])+`<p class="hint" style="margin:6px 0 0">${esc(sayMove([tok]))}</p>`:'<p class="hint" style="margin:0">Pick a direction, buttons, or both. They are pressed together.</p>'}</div>
@@ -282,7 +284,7 @@ function vHelp(){const st=curStances(),set=S.set;
   <div class="box"><div class="legend">${Object.keys(st).map(k=>L(k,esc(st[k]))).join('')}${Object.keys(TAGS).map(k=>L(k,esc(TAGS[k]))).join('')}</div></div>
   <h2 class="sec">Settings</h2>
   <div class="box"><p class="hint">Button picture layout</p><div class="tog" style="margin-top:0">${opt('style','arcade','Arcade square')}${opt('style','pad','Controller diamond')}</div>
-  <p class="hint" style="margin-top:14px">Button names in explanations</p><div class="tog" style="margin-top:0">${opt('pad','ps','PlayStation')}${opt('pad','xbox','Xbox')}${opt('pad','none','Plain')}</div>
+  <p class="hint" style="margin-top:14px">Controller (button colours and names)</p><div class="tog" style="margin-top:0">${opt('pad','ps','PlayStation')}${opt('pad','xbox','Xbox')}${opt('pad','none','Plain gold')}</div>
   <p class="hint" style="margin-top:14px">Number notation under pictures</p><div class="tog" style="margin-top:0"><button class="${set.text?'on':''}" data-act="settext" data-v="1">Show</button><button class="${!set.text?'on':''}" data-act="settext" data-v="">Hide</button></div>
   <label class="f" for="sn">Your name (shown on combos you share)</label><input class="t" id="sn" data-s="name" value="${esc(set.name)}" maxlength="30" placeholder="Player"></div>
   <h2 class="sec">Combos from other people</h2>
